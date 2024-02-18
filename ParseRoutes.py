@@ -1,9 +1,9 @@
 import csv
 import os
 
-routes_csv = os.getcwd() + "\\routes.csv"
-asiaAirportsCSV = os.getcwd() + "\\AsiaAirports.csv"
-asiaRoutesCSV = os.getcwd() + "\\AsiaRoutes.csv"
+routes_csv = os.getcwd() + "\\datasets\\routes.csv"
+asiaAirportsCSV = os.getcwd() + "\\datasets\\AsiaAirports.csv"
+asiaRoutesCSV = os.getcwd() + "\\datasets\\AsiaRoutes.csv"
 
 try:
     asiaCodes = []

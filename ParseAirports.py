@@ -2,8 +2,8 @@ import csv
 import os
 from encodings import utf_8
 
-airports_csv = os.getcwd() + "\\airports.csv"
-asia_airports_csv = os.getcwd() + "\\AsiaAirports.csv"
+airports_csv = os.getcwd() + "\\datasets\\airports.csv"
+asia_airports_csv = os.getcwd() + "\\datasets\\AsiaAirports.csv"
 
 try:
     rows = []
