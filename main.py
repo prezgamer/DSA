@@ -1,45 +1,27 @@
-# import json
-# import os
-# print(os.getcwd())
-
-# # Define the file name
-# file_name = open("C:/Users/ffjan/OneDrive/Desktop/DSA Project/DSA/Routes.json")
-
-# # returns JSON object as 
-# # a dictionary
-# data = json.load(file_name)
- 
-# # Iterating through the json
-# # list
-# for i in data["AirlineDetails"]:
-#     print(i)
-
 import json
 import os
+import networkx as nx
+import matplotlib.pyplot as plt
 
-file_name = os.getcwd() + "\\Route2.json"
-print(file_name)
+from ParseToMatrix import ParseToMatrix
+from TrimRoutes import TrimRoutes
 
-try:
-    # Open the file in read mode
-    with open(file_name, "r") as file:
-        # Read the contents of the file
-        routes_data = json.load(file)
-        for i in routes_data:
-            print(i)
-except Exception as e:
-    print(e)
+def main():
+    adjMatrix = ParseToMatrix()
+    N = len(adjMatrix)
+    
+    G = nx.DiGraph()
+    
+    for i in range(N):
+        for j in range(N):
+            if adjMatrix[i][j] == 1:
+                G.add_edge(i,j)
+                
+    nx.draw(G, with_labels=True, node_color="lightblue", node_size=200, font_weight="bold")
+    
+    # WARNING: very laggy, takes a while to start the interactive display
+    # plt.show()
 
-# try:
-#     # Open the file in read mode
-#     with open('Routes.json', 'r', encoding='utf-8') as file:
-#         # Read the contents of the file
-#         routes_data = json.load(file)
-#         print(routes_data)
 
-# except FileNotFoundError:
-#     print(f"File '{'C:/Users/ffjan/OneDrive/Desktop/DSA Project/DSA/Routes.json'}' not found.")
-# except json.JSONDecodeError as e:
-#     print(f"Error decoding JSON file '{'C:/Users/ffjan/OneDrive/Desktop/DSA Project/DSA/Routes.json'}': {e}")
-# except Exception as e:
-#     print(f"Error loading JSON file '{'C:/Users/ffjan/OneDrive/Desktop/DSA Project/DSA/Routes.json'}': {e}")
+if __name__ == "__main__":
+    main()
