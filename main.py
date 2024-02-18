@@ -16,9 +16,8 @@
 
 import json
 import os
-print(os.getcwd())
 
-file_name = 'C:/Users/ffjan/OneDrive/Desktop/DSA Project/Routes.json'
+file_name = os.getcwd() + "\\Route2.json"
 print(file_name)
 
 try:
@@ -26,9 +25,10 @@ try:
     with open(file_name, "r") as file:
         # Read the contents of the file
         routes_data = json.load(file)
-        print(routes_data)
+        for i in routes_data:
+            print(i)
 except Exception as e:
-    print("Error loading JSON file:", e)
+    print(e)
 
 # try:
 #     # Open the file in read mode
