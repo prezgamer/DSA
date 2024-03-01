@@ -2,8 +2,8 @@ import dis
 import json
 import os
 
-from networkx import desargues_graph
-from numpy import double
+#from networkx import desargues_graph
+#from numpy import double
 # import networkx as nx
 # import matplotlib.pyplot as plt
 
@@ -11,37 +11,45 @@ from DataParser import AirportsDictToList, ParseAirports, ParseRoutes, ParseToMa
 from Haversine import haversine
 
 def main():
-    # routesDict = ParseRoutes()
+    routesDict = ParseRoutes()
     airportsDict = ParseAirports()
     
-    # routesList = RoutesDictToList(routesDict)
+    routesList = RoutesDictToList(routesDict)
     airportsList = AirportsDictToList(airportsDict)
     
     sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
     destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
     
-    airportsExists = validateChoices(sourceAirportCode, destAirportCode, airportsList)
+    airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
     
     while (airportsExists == False):
         print("The airport codes you entered were invalid. Please enter again.")
         sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
         destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
-        airportsExists = validateChoices(sourceAirportCode, destAirportCode, airportsList)
+        airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
     
+    routeExists = validateRoute(sourceAirportCode, destAirportCode, routesList)
+
+    while (routeExists == False):
+        print("The flight between your chosen airports does not exist. Please enter again.")
+        sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
+        destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
+        airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
+        routeExists = validateRoute(sourceAirportCode, destAirportCode, routesList)
+
     for airport in airportsDict:
         if airport['IATA'] == sourceAirportCode:
             sourceAirport = airport
         elif airport['IATA'] == destAirportCode:
             destAirport = airport
     
-    sourceLongitude = double(sourceAirport['longitude'])
-    sourceLatitude = double(sourceAirport['latitude'])
-    destLongitude = double(destAirport['longitude'])
-    destLatitude = double(destAirport['latitude'])
+    sourceLongitude = float(sourceAirport['longitude'])
+    sourceLatitude = float(sourceAirport['latitude'])
+    destLongitude = float(destAirport['longitude'])
+    destLatitude = float(destAirport['latitude'])
     distance = haversine(sourceLongitude, sourceLatitude, destLongitude, destLatitude)
     print("The distance between the two airports chosen is: {:.2f}Km".format(distance))
             
-    
     # adjMatrix = ParseToMatrix()
     # N = len(adjMatrix)
     # G = nx.DiGraph()
@@ -55,7 +63,7 @@ def main():
     # plt.show()
             
     
-def validateChoices(source, dest, airportsList):
+def validateAirportChoice(source, dest, airportsList):
     sourceExists = False
     destExists = False
     
@@ -70,6 +78,21 @@ def validateChoices(source, dest, airportsList):
     else:
         return True
     
+
+def validateRoute(source, dest, routesList):
+    sourceExists = False
+    destExists = False
+    
+    for route in routesList:
+        if route[0] == source:
+            sourceExists = True
+        elif route[1] == dest:
+            destExists = True
+                
+    if (sourceExists == False or destExists == False):
+        return False
+    else:
+        return True
     
 if __name__ == "__main__":
     main()
