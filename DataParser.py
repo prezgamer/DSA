@@ -1,5 +1,18 @@
 import os
 import json
+from AdjacencyList import Graph
+
+
+# parse airports into adjacency list based on existing flight routes
+def ParseToAdjList() -> Graph:
+    routes_dict = ParseRoutes()
+    
+    routesList = RoutesDictToList(routes_dict)
+    
+    adjListGraph = Graph(routesList)
+
+    return adjListGraph
+    
 
 # Parse airports into an adjacency matrix based on existing flight routes
 def ParseToMatrix() -> list[list[int]]:

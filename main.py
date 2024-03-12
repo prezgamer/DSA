@@ -1,16 +1,20 @@
 import dis
 import json
 import os
-
 #from networkx import desargues_graph
 #from numpy import double
 # import networkx as nx
 # import matplotlib.pyplot as plt
+from DataParser import ParseRoutes, ParseAirports, RoutesDictToList, AirportsDictToList, ParseToAdjList
+from Algorithms import Haversine, Dijkstra
 
-from DataParser import AirportsDictToList, ParseAirports, ParseRoutes, ParseToMatrix, RoutesDictToList
-from Haversine import haversine
 
 def main():
+    adjListGraph = ParseToAdjList()
+    adjListGraph.printAdjList("SIN")
+
+
+def FindDistance():
     routesDict = ParseRoutes()
     airportsDict = ParseAirports()
     
@@ -21,7 +25,6 @@ def main():
     destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
     
     airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
-    
     while (airportsExists == False):
         print("The airport codes you entered were invalid. Please enter again.")
         sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
@@ -29,7 +32,6 @@ def main():
         airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
     
     routeExists = validateRoute(sourceAirportCode, destAirportCode, routesList)
-
     while (routeExists == False):
         print("The flight between your chosen airports does not exist. Please enter again.")
         sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
@@ -47,21 +49,9 @@ def main():
     sourceLatitude = float(sourceAirport['latitude'])
     destLongitude = float(destAirport['longitude'])
     destLatitude = float(destAirport['latitude'])
-    distance = haversine(sourceLongitude, sourceLatitude, destLongitude, destLatitude)
+    distance = Haversine(sourceLongitude, sourceLatitude, destLongitude, destLatitude)
     print("The distance between the two airports chosen is: {:.2f}Km".format(distance))
-            
-    # adjMatrix = ParseToMatrix()
-    # N = len(adjMatrix)
-    # G = nx.DiGraph()
-    # for i in range(N):
-    #     for j in range(N):
-    #         if adjMatrix[i][j] == 1:
-    #             G.add_edge(i,j)
-    # nx.draw(G, with_labels=True, node_color="lightblue", node_size=200, font_weight="bold")
-    
-    # WARNING: very laggy, takes a while to start the interactive display
-    # plt.show()
-            
+
     
 def validateAirportChoice(source, dest, airportsList):
     sourceExists = False
@@ -96,3 +86,16 @@ def validateRoute(source, dest, routesList):
     
 if __name__ == "__main__":
     main()
+
+
+# adjMatrix = ParseToMatrix()
+# N = len(adjMatrix)
+# G = nx.DiGraph()
+# for i in range(N):
+#     for j in range(N):
+#         if adjMatrix[i][j] == 1:
+#             G.add_edge(i,j)
+# nx.draw(G, with_labels=True, node_color="lightblue", node_size=200, font_weight="bold")
+
+# WARNING: very laggy, takes a while to start the interactive display
+# plt.show()
