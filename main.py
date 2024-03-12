@@ -1,24 +1,24 @@
-import dis
-from distutils.errors import LibError
-import json
-import os
 from Airport import Airport
+from DataParser import ParseRoutes, ParseAirports, RoutesDictToList, AirportsDictToList, ParseToAdjList
+from Algorithms import Dijkstra
+from FlightRoute import FlightRoute
 #from networkx import desargues_graph
 #from numpy import double
 # import networkx as nx
 # import matplotlib.pyplot as plt
-from DataParser import ParseRoutes, ParseAirports, RoutesDictToList, AirportsDictToList, ParseToAdjList
-from Algorithms import Haversine, Dijkstra
-from FlightRoute import FlightRoute
 
 
 def main():
     adjListGraph = ParseToAdjList()
-    adjListGraph.printAdjList("SIN")
+    
+    shortestDistance = Dijkstra(adjListGraph.getAdjList(), "SIN", "TPE")
+    
+    print(shortestDistance)
+
+    return
 
 
-
-def FindDistance():
+def GetUserInput():
     routesDict = ParseRoutes()
     airportsDict = ParseAirports()
     
@@ -45,13 +45,8 @@ def FindDistance():
         destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
         airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
         routeExists = validateRoute(sourceAirportCode, destAirportCode, routesList)
-    x
-    sourceLongitude = float(airportsExists[0].getLongitude())
-    sourceLatitude = float(airportsExists[0].getLatitude())
-    destLongitude = float(airportsExists[1].getLongitude())
-    destLatitude = float(airportsExists[1].getLatitude())
-    distance = Haversine(sourceLongitude, sourceLatitude, destLongitude, destLatitude)
-    print("The distance between the two airports chosen is: {:.2f}Km".format(distance))
+        
+    return airportsExists
 
     
 def validateAirportChoice(sourceAirportCode, destAirportCode, airportsList) -> list[Airport] | None:
@@ -70,7 +65,7 @@ def validateAirportChoice(sourceAirportCode, destAirportCode, airportsList) -> l
         else:
             return [sourceAirport, destinationAirport]
     
-    return None    
+    return None
 
 
 def validateRoute(source, dest, routesList) -> FlightRoute | None:

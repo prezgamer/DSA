@@ -1,6 +1,9 @@
 import csv
 import os
-
+"""
+Cut out fight routes that don't involve airports in Asia, only write to file routes within Asia
+Used only once.
+"""
 def TrimRoutes():
     routes_csv = os.getcwd() + "\\datasets\\routes.csv"
     asiaAirportsCSV = os.getcwd() + "\\datasets\\AsiaAirports.csv"

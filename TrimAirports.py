@@ -1,6 +1,9 @@
 import csv
 import os
-
+"""
+Cut out other airports in the world, only write to file airports within Asia
+Used only once.
+"""
 def TrimAirports():
     airports_csv = os.getcwd() + "\\datasets\\airports.csv"
     asia_airports_csv = os.getcwd() + "\\datasets\\AsiaAirports.csv"

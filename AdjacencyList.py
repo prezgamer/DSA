@@ -4,28 +4,22 @@ class Graph:
 
     def __init__(self, routesList):
         for route in routesList:
-            self.addEdge(route[0], route[1])
+            self.addEdge(route.getSource(), route.getDestination(), route)
             
 
-    def addEdge(self, v, w):
+    def addEdge(self, v, w, route):
         if v in self.adjList:
-            self.adjList[v].append(w)
+            self.adjList[v].append([w, route.getDistance()])
         else:
             self.adjList[v] = []
-            self.adjList[v].append(w)
+            self.adjList[v].append([w,route.getDistance()])
 
         if w in self.adjList:
-            self.adjList[w].append(v)
+            self.adjList[w].append([v,route.getDistance()])
         else:
             self.adjList[w] = []
-            self.adjList[w].append(v)
+            self.adjList[w].append([v,route.getDistance()])
 
     
-    def getAdjList(self, v):
-        return self.adjList[v]
-    
-    
-    def printAdjList(self, airportCode):
-        print("Adjacent airports to " + airportCode + "are:")
-        for adjAirport in self.getAdjList(airportCode):
-            print(adjAirport)
+    def getAdjList(self):
+        return self.adjList

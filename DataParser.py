@@ -39,8 +39,8 @@ def ParseToMatrix() -> list[list[int]]:
     # for each route's source and destination, get it's corresponding index number
     # then populate 2D square array (adjacency matrix) using row and col index
     for routes in routesList:
-        row = airportIndex[routes[0]]
-        col = airportIndex[routes[1]]
+        row = airportIndex[routes.getSource]
+        col = airportIndex[routes.getDestination]
         adjMatrix[row][col] = 1
         
     return adjMatrix
@@ -75,7 +75,7 @@ def RoutesDictToList(routesDict) -> list[FlightRoute]:
     
     # for every route object, parse into pairs of source and destination airports
     for routes in routesDict:
-        route = FlightRoute(routes['airline'],routes['sourceAirport'], routes['destAirport'])
+        route = FlightRoute(routes['airline'],routes['sourceAirport'], routes['destAirport'], routes['distance'])
         routesList.append(route)
         
     return routesList
@@ -86,8 +86,7 @@ def AirportsDictToList(airportsDict) -> list[Airport]:
     
     # for every airport object, parse into list of airport codes and sort alphabetically
     for airports in airportsDict:
-        airport = Airport(airports['airportName'], airports['city'], airports['country'], airports['IATA'], airports['latitude'], airports['longituce'])
+        airport = Airport(airports['airportName'], airports['city'], airports['country'], airports['IATA'], airports['latitude'], airports['longitude'])
         airportsList.append(airport)
-    airportsList.sort()
     
     return airportsList
