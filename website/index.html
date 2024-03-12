@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Existing head content -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Route Finder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
     <header>
-        <h1>Flight Route Finder</h1>
+        <h1>Flights</h1>
     </header>
-
-    <main>
-        <section class="search-area">
-            <form id="searchForm">
-                <input type="text" id="fromAirport" placeholder="From Airport Code" required>
-                <input type="text" id="toAirport" placeholder="To Airport Code" required>
-                <button type="submit">Find Route</button>
-            </form>
-        </section>
-
-        <section class="suggested-trips">
-            <h2>Suggested trips from Singapore</h2>
-            <!-- You'll dynamically insert suggested trips here with JavaScript -->
-        </section>
-
-        <section class="map-area">
-            <div id="map" style="height: 400px;"></div>
-            <div id="routeDisplay"></div>
-        </section>
-    </main>
-
-    <footer>
-        <!-- Footer content here -->
-    </footer>
-
+    <div class="search-box">
+        <input type="text" id="fromAirport" placeholder="Singapore">
+        <input type="text" id="toAirport" placeholder="Where to?">
+        <button type="submit" id="searchForm">Explore</button>
+    </div>
+    <!-- Map container -->
+    <div id="map" style="height: 400px;"></div>
+    <!-- Route display -->
+    <div id="routeDisplay"></div>
     <script src="script.js"></script>
 </body>
 </html>
+
+
 
