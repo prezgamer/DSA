@@ -6,7 +6,7 @@ class Graph:
         for route in routesList:
             self.addEdge(route.getSource(), route.getDestination(), route)
             
-
+    
     def addEdge(self, v, w, route):
         if v in self.adjList:
             self.adjList[v].append([w, route.getDistance()])

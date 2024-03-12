@@ -31,6 +31,7 @@ def Dijkstra(adjacency_list, start, end):
     predecessors = {}  # Keep track of predecessors
 
     while pq:
+        # Pop from heap to get smallest (distance, node) pair in priority queue
         current_distance, current_node = heapq.heappop(pq)
 
         # Skip if we have already found a shorter path to this node
@@ -56,23 +57,21 @@ def Dijkstra(adjacency_list, start, end):
     shortest_path.append(start)
     shortest_path.reverse()  # Reverse the path to get start to end order
 
-    return shortest_path
+    return shortest_path, distances[end]
 
 
 # Example adjacency list of flight routes
-# adjacency_list = {
-#     'A': [('B', 10), ('C', 3)],
-#     'B': [('C', 1), ('D', 2)],
-#     'C': [('B', 4), ('D', 8), ('E', 2)],
-#     'D': [('E', 7)],
-#     'E': [('D', 9)]
-# }
+adjacency_list = {
+    'A': [('B', 10), ('C', 3)],
+    'B': [('C', 1), ('D', 2)],
+    'C': [('B', 4), ('D', 8), ('E', 2)],
+    'D': [('E', 7)],
+    'E': [('D', 9)]
+}
 
-# start = 'A'
-# end = 'E'
+start = 'A'
+end = 'E'
 
-# shortest_path, shortest_distance = Dijkstra(adjacency_list, start, end)
-# print(f"The shortest path from {start} to {end} is: {shortest_path}")
-# print(f"The shortest distance from {start} to {end} is: {shortest_distance}")
-
-
+shortest_path, shortest_distance = Dijkstra(adjacency_list, start, end)
+print(f"The shortest path from {start} to {end} is: {shortest_path}")
+print(f"The shortest distance from {start} to {end} is: {shortest_distance}")

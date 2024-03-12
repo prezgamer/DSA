@@ -11,9 +11,13 @@ from FlightRoute import FlightRoute
 def main():
     adjListGraph = ParseToAdjList()
     
-    shortestDistance = Dijkstra(adjListGraph.getAdjList(), "SIN", "TPE")
+    start = "SIN"
+    end = "TPE"
     
-    print(shortestDistance)
+    shortest_path, shortest_distance = Dijkstra(adjListGraph.getAdjList(), "SIN", "TPE")
+    
+    print(f"The shortest path from {start} to {end} is: {shortest_path}")
+    print(f"The shortest distance from {start} to {end} is: {shortest_distance}")
 
     return
 

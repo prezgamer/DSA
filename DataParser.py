@@ -4,8 +4,8 @@ from AdjacencyList import Graph
 from FlightRoute import FlightRoute
 from Airport import Airport
 
-
-# parse airports into adjacency list based on existing flight routes
+# Parse flight routes into an adjacency list, based on data from asia flight routes json file
+# returns adjacency list
 def ParseToAdjList() -> Graph:
     routes_dict = ParseRoutes()
     
@@ -16,7 +16,8 @@ def ParseToAdjList() -> Graph:
     return adjListGraph
     
 
-# Parse airports into an adjacency matrix based on existing flight routes
+# Parse flight routes into an adjacency matrix, based on data from asia flight routes json file
+# returns adjacency matrix
 def ParseToMatrix() -> list[list[int]]:
     routes_dict = ParseRoutes()
     
@@ -45,7 +46,9 @@ def ParseToMatrix() -> list[list[int]]:
         
     return adjMatrix
 
-        
+
+# Reads asia routes json file and loads data into a dictionary
+# returns routes dictionary
 def ParseRoutes() -> dict:
     routes_json = os.getcwd() + "\\datasets\\AsiaRoutes.json"
     
@@ -57,7 +60,9 @@ def ParseRoutes() -> dict:
         
     return routes_dict
     
-    
+
+# Reads asia airports json file and loads data into a dictionary
+# returns airports dictionary
 def ParseAirports() -> dict:
     airports_json = os.getcwd() + "\\datasets\\AsiaAirports.json"
 
@@ -69,7 +74,8 @@ def ParseAirports() -> dict:
         
     return airports_dict
 
-
+# converts routes dictionary into a list of FlightRoute objects
+# returns list of FlightRoute objects
 def RoutesDictToList(routesDict) -> list[FlightRoute]:
     routesList = []
     
@@ -80,7 +86,8 @@ def RoutesDictToList(routesDict) -> list[FlightRoute]:
         
     return routesList
 
-
+# converts airports dictionary into a list of Airport objects
+# returns list of Airport objects
 def AirportsDictToList(airportsDict) -> list[Airport]:
     airportsList = []
     
