@@ -1,17 +1,21 @@
 import dis
+from distutils.errors import LibError
 import json
 import os
+from Airport import Airport
 #from networkx import desargues_graph
 #from numpy import double
 # import networkx as nx
 # import matplotlib.pyplot as plt
 from DataParser import ParseRoutes, ParseAirports, RoutesDictToList, AirportsDictToList, ParseToAdjList
 from Algorithms import Haversine, Dijkstra
+from FlightRoute import FlightRoute
 
 
 def main():
     adjListGraph = ParseToAdjList()
     adjListGraph.printAdjList("SIN")
+
 
 
 def FindDistance():
@@ -24,65 +28,67 @@ def FindDistance():
     sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
     destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
     
+    # if airports exists, returns pair of valid Airport objects and assigns to airportExists, else airportExists = None
     airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
-    while (airportsExists == False):
+    while (airportsExists == None):
         print("The airport codes you entered were invalid. Please enter again.")
         sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
         destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
         airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
     
+    # if route exists, returns valid FlightRoute object and assigns to routeExists, else routeExists = None
     routeExists = validateRoute(sourceAirportCode, destAirportCode, routesList)
-    while (routeExists == False):
-        print("The flight between your chosen airports does not exist. Please enter again.")
+    while (routeExists == None):
+        print("The flight route between your chosen airports does not exist. Please enter again.")
+        # call function to get connecting routes here, using dijkstra algorithm to find shortest path from source to destination 
         sourceAirportCode = input("Please enter the airport code of the airport you wish to fly from: ")
         destAirportCode = input("Please enter the airport code of the airport you wish to fly to: ")
         airportsExists = validateAirportChoice(sourceAirportCode, destAirportCode, airportsList)
         routeExists = validateRoute(sourceAirportCode, destAirportCode, routesList)
-
-    for airport in airportsDict:
-        if airport['IATA'] == sourceAirportCode:
-            sourceAirport = airport
-        elif airport['IATA'] == destAirportCode:
-            destAirport = airport
-    
-    sourceLongitude = float(sourceAirport['longitude'])
-    sourceLatitude = float(sourceAirport['latitude'])
-    destLongitude = float(destAirport['longitude'])
-    destLatitude = float(destAirport['latitude'])
+    x
+    sourceLongitude = float(airportsExists[0].getLongitude())
+    sourceLatitude = float(airportsExists[0].getLatitude())
+    destLongitude = float(airportsExists[1].getLongitude())
+    destLatitude = float(airportsExists[1].getLatitude())
     distance = Haversine(sourceLongitude, sourceLatitude, destLongitude, destLatitude)
     print("The distance between the two airports chosen is: {:.2f}Km".format(distance))
 
     
-def validateAirportChoice(source, dest, airportsList):
+def validateAirportChoice(sourceAirportCode, destAirportCode, airportsList) -> list[Airport] | None:
     sourceExists = False
     destExists = False
     
     for airport in airportsList:
-        if airport == source:
+        if airport.getIATA() == sourceAirportCode:
             sourceExists = True
-        elif airport == dest:
+            sourceAirport = airport
+        elif airport.getIATA() == destAirportCode:
             destExists = True
-                
-    if (sourceExists == False or destExists == False):
-        return False
-    else:
-        return True
+            destinationAirport = airport
+        if (sourceExists == False or destExists == False):
+            continue
+        else:
+            return [sourceAirport, destinationAirport]
     
+    return None    
 
-def validateRoute(source, dest, routesList):
+
+def validateRoute(source, dest, routesList) -> FlightRoute | None:
     sourceExists = False
     destExists = False
     
     for route in routesList:
-        if route[0] == source:
+        if route.getSource() == source:
             sourceExists = True
-        elif route[1] == dest:
+        elif route.getDestination() == dest:
             destExists = True
+        if (sourceExists == False or destExists == False):
+            continue
+        else:
+            return route
+        
+    return None
                 
-    if (sourceExists == False or destExists == False):
-        return False
-    else:
-        return True
     
 if __name__ == "__main__":
     main()

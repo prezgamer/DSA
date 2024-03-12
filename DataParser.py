@@ -1,6 +1,8 @@
 import os
 import json
 from AdjacencyList import Graph
+from FlightRoute import FlightRoute
+from Airport import Airport
 
 
 # parse airports into adjacency list based on existing flight routes
@@ -68,23 +70,24 @@ def ParseAirports() -> dict:
     return airports_dict
 
 
-def RoutesDictToList(routesDict) -> list:
+def RoutesDictToList(routesDict) -> list[FlightRoute]:
     routesList = []
     
     # for every route object, parse into pairs of source and destination airports
     for routes in routesDict:
-        pair = (routes['sourceAirport'], routes['destAirport'])
-        routesList.append(pair)
+        route = FlightRoute(routes['airline'],routes['sourceAirport'], routes['destAirport'])
+        routesList.append(route)
         
     return routesList
 
 
-def AirportsDictToList(airportsDict) -> list:
+def AirportsDictToList(airportsDict) -> list[Airport]:
     airportsList = []
     
     # for every airport object, parse into list of airport codes and sort alphabetically
     for airports in airportsDict:
-        airportsList.append(airports['IATA'])
+        airport = Airport(airports['airportName'], airports['city'], airports['country'], airports['IATA'], airports['latitude'], airports['longituce'])
+        airportsList.append(airport)
     airportsList.sort()
     
     return airportsList

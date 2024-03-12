@@ -1,8 +1,18 @@
+from numpy import source
+
+
 class FlightRoute:
     airline = ""
-    airlineID = 0
     sourceAirport = ""
-    sourceAirportID = 0
     destinationAirport = ""
-    destinationAirportID = 0
-    stops = 0
+
+    def __init__(self, airline, sourceAirport, destinationAirport):
+        self.airline = airline
+        self.sourceAirport = sourceAirport
+        self.destinationAirport = destinationAirport
+
+    def getSource(self):
+        return self.sourceAirport
+    
+    def getDestination(self):
+        return self.destinationAirport
