@@ -1,22 +1,37 @@
-body {
-    font-family: Arial, sans-serif;
+/* Existing CSS */
+
+header, .search-area, .suggested-trips, .map-area, footer {
     margin: 20px;
     padding: 20px;
-    background-color: #f0f0f0;
 }
 
-form {
-    margin-bottom: 20px;
+.search-area {
+    background-color: #ffffff; /* or any color that fits your design */
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-input, button {
-    margin: 5px 0;
-    padding: 10px;
-    font-size: 16px;
+.suggested-trips {
+    margin-top: 20px;
+}
+
+.map-area {
+    margin-top: 20px;
+    position: relative; /* For positioning route display on top of the map */
+}
+
+#map {
+    z-index: 1; /* Ensures that the map is behind the route display */
 }
 
 #routeDisplay {
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2; /* Ensures that the route display is above the map */
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
