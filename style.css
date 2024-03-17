@@ -21,7 +21,6 @@ header {
 .search-box input[type="text"],
 .search-box button {
     padding: 10px;
-    margin-right: 10px;
     border: none;
     border-radius: 5px;
 }
@@ -36,7 +35,6 @@ header {
 #map {
     height: 400px; /* You can set the height as needed */
     width: 100%;
-    margin-top: 20px;
 }
 
 /* Route display */

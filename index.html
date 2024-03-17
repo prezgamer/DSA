@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flight Route Finder</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
     <header>
-        <h1>Flights</h1>
+        <h1>Flight Route Finder</h1>
     </header>
     <div class="search-box">
-        <input type="text" id="fromAirport" placeholder="Singapore">
-        <input type="text" id="toAirport" placeholder="Where to?">
-        <button type="submit" id="searchForm">Explore</button>
+        <input type="text" id="fromAirport" placeholder="Origin airport">
+        <input type="text" id="toAirport" placeholder="Destination airport">
+        <button type="submit" id="searchForm" onclick="runPy()">Explore</button>
     </div>
     <!-- Map container -->
     <div id="map" style="height: 400px;"></div>
