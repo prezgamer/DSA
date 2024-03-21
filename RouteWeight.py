@@ -13,8 +13,6 @@ def RouteWeight():
     airportsDict = ParseAirports()
     airportsList = AirportsDictToList(airportsDict)
     
-    routeRows = []
-    
     try:
         with open(asiaRoutesCSV, "r", encoding="utf_8") as asiaRoutesFile:
             with open(newRoutesCSV, "w", newline= "", encoding="utf_8") as newRoutesFile:
