@@ -63,18 +63,76 @@ def Dijkstra(adjacency_list, start, end):
         raise KeyError("No route exist for given airports")
 
 
-# Example adjacency list of flight routes
+# calculate the shortest path from start to end using A* algorithm with the given adjacency list and coordinates 
+def A_star(adjacency_list, start, end, coordinates):
+    try:
+        # Initialize distances from start to all other nodes as infinity
+        distances = {node: float('infinity') for node in adjacency_list}
+        distances[start] = 0 # Distance from start to start is 0
+
+        # Initialize priority queue with start node
+        priority_queue = [(Haversine(coordinates[start][1], coordinates[start][0], coordinates[end][1], coordinates[end][0]), 0, start)]
+        predecessors = {} # Keep track of predecessors
+
+        while priority_queue:
+            # pop from heap to get smallest (estimated_total_cost, current_distance, current_node) pair in priority queue
+            estimated_total_cost, current_distance, current_node = heapq.heappop(priority_queue)
+
+            # skip if we have already found a shorter path to this node
+            if current_node == end:
+                break
+
+            # explore neighbors of the current node
+            for neighbour, weight in adjacency_list[current_node]:
+                distance = current_distance + weight
+
+                # update distance once a shorter path is found
+                if distance < distances[neighbour]:
+                    distances[neighbour] = distance
+                    neighbour_coordinate = coordinates[neighbour]
+                    end_coordinate = coordinates[end]
+                    estimated_cost_to_end = Haversine(neighbour_coordinate[1], neighbour_coordinate[0], end_coordinate[1], end_coordinate[0])
+                    total_estimated_cost = distance + estimated_cost_to_end 
+                    heapq.heappush(priority_queue, (total_estimated_cost, distance, neighbour))
+                    predecessors[neighbour] = current_node
+        
+        # backtrack to construct the shortest path
+        shortest_path = []
+        current_node = end
+        while current_node != start:
+            shortest_path.append(current_node)
+            current_node = predecessors.get(current_node, start) # If no predecessor, then we have reached the start
+        shortest_path.append(start)
+        shortest_path.reverse()  # Reverse the path to get start to end order
+        
+        # Return the shortet path and the distance from the start to the end
+        return shortest_path, distances[end]
+    except KeyError:
+        raise KeyError("No route exist for given airports")
+
+# Example coordinates for each node (airport)
+# coordinates = {
+#     'A': (34.5, -123.4),  
+#     'B': (35.4, -124.5), 
+#     'C': (36.3, -125.6),  
+#     'D': (37.2, -126.7),
+#     'E': (38.1, -127.8),
+# }
+
+# # Example adjacency list of flight routes
 # adjacency_list = {
 #     'A': [('B', 10), ('C', 3)],
 #     'B': [('C', 1), ('D', 2)],
 #     'C': [('B', 4), ('D', 8), ('E', 2)],
 #     'D': [('E', 7)],
-#     'E': [('D', 9)]
+#     'E': [('D', 9)],
 # }
 
 # start = 'A'
 # end = 'E'
 
-# shortest_path, shortest_distance = Dijkstra(adjacency_list, start, end)
+# # Call the A_star function with the example data
+# shortest_path, shortest_distance = A_star(adjacency_list, start, end, coordinates)
+# # shortest_path, shortest_distance = Dijkstra(adjacency_list, start, end)
 # print(f"The shortest path from {start} to {end} is: {shortest_path}")
-# print(f"The shortest distance from {start} to {end} is: {shortest_distance}")
+# print(f"The shortest distance from {start} to {end} is: {shortest_distance} km")

@@ -19,13 +19,11 @@ async function runPy() {
             window.alert("Either no route exists in between these airports or you have entered invalid airport names. Please try again.")
         }
         else {
+            // extract route information from routing info retrieved from server
             shortestPathInfo = routingInfo[0]
-            totalDistance = routingInfo[1]
-            fromLatitude = routingInfo[2]
-            fromLongitude = routingInfo[3]
-            toLatitude = routingInfo[4]
-            toLongitude = routingInfo[5]
-            
+            pathNodeCoordinates = routingInfo[1]
+            totalDistance = routingInfo[2]
+
             // Clear previous markers and paths
             map.eachLayer(function(layer) {
                 if (!!layer.toGeoJSON) {
@@ -35,22 +33,55 @@ async function runPy() {
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
+            
+            for (let i = 0; i < pathNodeCoordinates.length-1; i++) {
+                fromLongitude = pathNodeCoordinates[i][0]
+                fromLatitude = pathNodeCoordinates[i][1]
+                toLongitude = pathNodeCoordinates[i+1][0]
+                toLatitude = pathNodeCoordinates[i+1][1]
 
-            // Add markers for the airports
-            L.marker([fromLatitude, fromLongitude]).addTo(map)
-                .bindPopup('Departure Airport: ' + fromAirport)
-                .openPopup();
-            L.marker([toLatitude, toLongitude]).addTo(map)
-                .bindPopup('Destination Airport: ' + toAirport)
-                .openPopup();
+                // Add markers for the airports
+                if (pathNodeCoordinates.length < 3) {
+                    L.marker([fromLatitude, fromLongitude]).addTo(map)
+                        .bindPopup('Departure Airport: ' + shortestPathInfo[i])
+                        .openPopup();
+                    L.marker([toLatitude, toLongitude]).addTo(map)  
+                        .bindPopup('Destination Airport: ' + shortestPathInfo[i+1])
+                        .openPopup();
+                }
+                else if (i == 0) {
+                    L.marker([fromLatitude, fromLongitude]).addTo(map)
+                        .bindPopup('Departure Airport: ' + shortestPathInfo[i])
+                        .openPopup();
+                    L.marker([toLatitude, toLongitude]).addTo(map)  
+                        .bindPopup('Connecting Airport: ' + shortestPathInfo[i+1])
+                        .openPopup();
+                }
+                else if (i < pathNodeCoordinates.length-1) {
+                    L.marker([fromLatitude, fromLongitude]).addTo(map)  
+                        .bindPopup('Connecting Airport: ' + shortestPathInfo[i])
+                        .openPopup();
+                    L.marker([toLatitude, toLongitude]).addTo(map)  
+                        .bindPopup('Destination Airport: ' + shortestPathInfo[i+1])
+                        .openPopup();
+                }
+                else {
+                    L.marker([fromLatitude, fromLongitude]).addTo(map)  
+                        .bindPopup('Connecting Airport: ' + shortestPathInfo[i])
+                        .openPopup();
+                    L.marker([toLatitude, toLongitude]).addTo(map)  
+                        .bindPopup('Connecting Airport: ' + shortestPathInfo[i+1])
+                        .openPopup();
+                }
 
-            // Draw the route
-            const routeCoordinates = [
-                [fromLatitude, fromLongitude],
-                [toLatitude, toLongitude]
-            ];
-            const routePath = L.polyline(routeCoordinates, {color: 'blue'}).addTo(map);
-            map.fitBounds(routePath.getBounds());
+                // Draw the route
+                const routeCoordinates = [
+                    [fromLatitude, fromLongitude],
+                    [toLatitude, toLongitude]
+                ];
+                const routePath = L.polyline(routeCoordinates, {color: 'blue'}).addTo(map);
+                map.fitBounds(routePath.getBounds());
+            }
 
             // Display route details
             const displayElement = document.getElementById('routeDisplay');

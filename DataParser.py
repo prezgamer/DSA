@@ -1,5 +1,7 @@
 import os
 import json
+
+from numpy import double
 from AdjacencyList_DiGraph import DiGraph
 from FlightRoute import FlightRoute
 from Airport import Airport
@@ -74,6 +76,7 @@ def ParseAirports() -> dict:
         
     return airports_dict
 
+
 # converts routes dictionary into a list of FlightRoute objects
 # returns list of FlightRoute objects
 def RoutesDictToList(routesDict) -> list[FlightRoute]:
@@ -86,6 +89,7 @@ def RoutesDictToList(routesDict) -> list[FlightRoute]:
         
     return routesList
 
+
 # converts airports dictionary into a list of Airport objects
 # returns list of Airport objects
 def AirportsDictToList(airportsDict) -> list[Airport]:
@@ -97,3 +101,14 @@ def AirportsDictToList(airportsDict) -> list[Airport]:
         airportsList.append(airport)
     
     return airportsList
+
+
+# converts airports dictionary into a tuple of airport longitude and latitude pairs
+def getCoordinates() -> dict:
+    airportsDict = ParseAirports()
+    coordinates = {}
+    
+    for airports in airportsDict:
+        coordinates[airports['IATA']] = (double(airports['longitude']), double(airports['latitude']))
+        
+    return coordinates
