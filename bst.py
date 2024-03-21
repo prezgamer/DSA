@@ -319,40 +319,36 @@ class Node:
         self.val = val
 
 def create_airport_objects(data):
+    airport_objects = []
     for row in data:
-        airport = Airport(
-            name=row[1],
-            city=row[2],
-            country=row[3],
-            iata=row[4],
-            latitude=row[6],
-            longitude=row[7],
-        )
-        airports[airport.iata] = airport
-    return airports
-
-
+        airport_objects.append(Airport(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
+    return airport_objects
 
 # Open the CSV file and read the data
-with open('C:/Users/Andrew Foo/Desktop/Python/DSA/datasets/AsiaAirports.csv', newline='', encoding='utf-8') as csvfile:
+with open('C:/Users/ffjan/OneDrive/Desktop/DSA/datasets/AsiaAirports.csv', newline='', encoding='utf-8') as csvfile:
     reader = csv.reader(csvfile)
     next(reader)  # Skip the header row
     data = [row for row in reader]
 
-airports = create_airport_objects(data)
 
-print (data)
+# Create a list of Airport objects
+airport_objects = create_airport_objects(data)
 
-# array = [f"{row[4]}:{airports}" for row in data]
+# Create a list of strings in the desired format
+airport_data_list = [f"{airport.IATA}: {airport.longitude}, {airport.latitude}" for airport in airport_objects]
 
-# bst = bst()
-# bst.createTree(array)
+# print("Data:", data)
+# # Print the resulting list
+print(airport_data_list)
 
-# key1 = input("Input key for the IATA:\n")
-# key2 = input("Input key for the IATA:\n")
+bst = bst()
+bst.createTree(airport_data_list)
 
-# if key1 != '-':
-#     print("The value of", key1, "is", bst.get(key1))
+key1 = input("Input key for the IATA:\n")
+key2 = input("Input key for the IATA:\n")
 
-# if key2 != '-':
-#     print("The value of", key2, "is", bst.get(key2))
+if key1 != '-':
+    print("The longitude & latitude of", key1, "is", bst.get(key1))
+
+if key2 != '-':
+    print("The longitude & latitude of", key2, "is", bst.get(key2))
