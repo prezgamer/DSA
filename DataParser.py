@@ -1,17 +1,17 @@
 import os
 import json
-from AdjacencyList import Graph
+from AdjacencyList_DiGraph import DiGraph
 from FlightRoute import FlightRoute
 from Airport import Airport
 
 # Parse flight routes into an adjacency list, based on data from asia flight routes json file
 # returns adjacency list
-def ParseToAdjList() -> Graph:
+def ParseToAdjList() -> DiGraph:
     routes_dict = ParseRoutes()
     
     routesList = RoutesDictToList(routes_dict)
     
-    adjListGraph = Graph(routesList)
+    adjListGraph = DiGraph(routesList)
 
     return adjListGraph
     

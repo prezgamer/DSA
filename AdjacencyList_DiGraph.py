@@ -1,4 +1,4 @@
-class Graph:
+class DiGraph:
 
     adjList = {}
 
@@ -14,12 +14,9 @@ class Graph:
             self.adjList[v] = []
             self.adjList[v].append([w,route.getDistance()])
 
-        if w in self.adjList:
-            self.adjList[w].append([v,route.getDistance()])
-        else:
+        if w not in self.adjList:
             self.adjList[w] = []
-            self.adjList[w].append([v,route.getDistance()])
-
+    
     
     def getAdjList(self):
         return self.adjList

@@ -63,6 +63,7 @@ async function runPy() {
     }
     catch (error) {
         console.error('There was an error fetching the data:', error);
+        window.alert("Network error when trying to fetch data. Server may be down.")
     }
 };
 

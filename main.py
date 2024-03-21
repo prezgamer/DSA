@@ -6,29 +6,29 @@ from FlightRoute import FlightRoute
 
 
 def main(fromAirport: str,toAirport: str):
-        adjListGraph = ParseToAdjList()
-        
-        start, end = getAirport(fromAirport, toAirport)
-        
-        if start is None or end is None:
-            print("No such airports exist")
-            raise Exception("No such airports exist")
-        else:
-            try:
-                shortest_path, shortest_distance = Dijkstra(adjListGraph.getAdjList(), start['IATA'], end['IATA'])
-                shortest_distance = '{:.2f}'.format(shortest_distance)
-                
-                print(f"The shortest path from {start['airportName']} to {end['airportName']} is: {shortest_path}")
-                print(f"The shortest distance from {start['airportName']} to {end['airportName']} is: {shortest_distance}")
-                
-                fromAirportLatitude = start['latitude']
-                fromAirportLongitude = start['longitude']
-                toAirportLatitude = end['latitude']
-                toAirportLongitude = end['longitude']
+    adjListGraph = ParseToAdjList()
+    
+    start, end = getAirport(fromAirport, toAirport)
+    
+    if start is None or end is None:
+        print("No such airports exist")
+        raise Exception("No such airports exist")
+    else:
+        try:
+            shortest_path, shortest_distance = Dijkstra(adjListGraph.getAdjList(), start['IATA'], end['IATA'])
+            shortest_distance = '{:.2f}'.format(shortest_distance)
+            
+            print(f"The shortest path from {start['airportName']} to {end['airportName']} is: {shortest_path}")
+            print(f"The shortest distance from {start['airportName']} to {end['airportName']} is: {shortest_distance}")
+            
+            fromAirportLatitude = start['latitude']
+            fromAirportLongitude = start['longitude']
+            toAirportLatitude = end['latitude']
+            toAirportLongitude = end['longitude']
 
-                return shortest_path, shortest_distance, fromAirportLatitude, fromAirportLongitude, toAirportLatitude, toAirportLongitude
-            except KeyError:
-                raise KeyError("No route exist for given airports")
+            return shortest_path, shortest_distance, fromAirportLatitude, fromAirportLongitude, toAirportLatitude, toAirportLongitude
+        except KeyError:
+            raise KeyError("No route exist for given airports")
         
     
 def getAirport(fromAirport, toAirport):
