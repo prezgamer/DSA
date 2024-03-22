@@ -5,48 +5,49 @@ from Algorithms import A_star, Dijkstra
 from FlightRoute import FlightRoute
 
 
-def main(fromAirport: str,toAirport: str):
-    adjListGraph = ParseToAdjList()
-    # need to fill this array with coordinates of all nodes
-    coordinates = getCoordinates()
+def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
     
-    start, end = getAirport(fromAirport, toAirport)
+    # get start and end airport objects
+    start, end = getAirport(fromAirport, toAirport, airportsBST)
     
     if start is None or end is None:
         print("No such airports exist")
         raise Exception("No such airports exist")
     else:
         try:
-            shortest_path, shortest_distance = A_star(adjListGraph.getAdjList(), start['IATA'], end['IATA'], coordinates)
-            # shortest_path, shortest_distance = Dijkstra(adjListGraph.getAdjList(), start['IATA'], end['IATA']) 
+            shortest_path, shortest_distance = A_star(adjListGraph.getAdjList(), start, end, airportsBST)
             shortest_distance = '{:.2f}'.format(shortest_distance)
-            
-            print(f"The shortest path from {start['airportName']} to {end['airportName']} is: {shortest_path}")
-            print(f"The shortest distance from {start['airportName']} to {end['airportName']} is: {shortest_distance} km")
-            
             pathNodeCoordinates = []
             
             for node in shortest_path:
-                longitude, latitude = coordinates[node]
+                airport = airportsBST.get(node)
+                longitude = airport.getLongitude()
+                latitude = airport.getLatitude()
                 pathNodeCoordinates.append((longitude, latitude))
 
+            for i in range(0, len(shortest_path)):
+                shortest_path[i] = airportsBST.get(shortest_path[i]).getName()
+                
             return shortest_path, pathNodeCoordinates, shortest_distance
         except KeyError:
             raise KeyError("No route exist for given airports")
         
     
-def getAirport(fromAirport, toAirport):
+def getAirport(fromAirport, toAirport, airportsBST):
     airportsDict = ParseAirports()
     start = None
     end = None
     
     for airport in airportsDict:
-        if start is None and airport['airportName'].__contains__(fromAirport):
-            start = airport
-        elif end is None and airport['airportName'].__contains__(toAirport):
-            end = airport
+        if start is None and airport['airportName'].casefold().__contains__(fromAirport.casefold()):
+            start = airport['IATA']
+        elif end is None and airport['airportName'].casefold().__contains__(toAirport.casefold()):
+            end = airport['IATA']
         elif start is not None and end is not None:
             break
+        
+    start = airportsBST.get(start)
+    end = airportsBST.get(end)
     
     return start, end
     
@@ -86,5 +87,5 @@ def validateRoute(source, dest, routesList) -> FlightRoute | None:
     return None
                 
     
-if __name__ == "__main__":
-    main('Singapore', 'Chinggis')
+# if __name__ == "__main__":
+#     main('Singapore', 'Chinggis')

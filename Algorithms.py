@@ -1,6 +1,8 @@
 import heapq
 from math import radians, cos, sin, asin, sqrt
 
+from numpy import double
+
 """
 Calculate the great circle distance in kilometers between two points 
 on the earth (specified in decimal degrees)
@@ -64,22 +66,24 @@ def Dijkstra(adjacency_list, start, end):
 
 
 # calculate the shortest path from start to end using A* algorithm with the given adjacency list and coordinates 
-def A_star(adjacency_list, start, end, coordinates):
+def A_star(adjacency_list, start, end, airportsBST):
     try:
         # Initialize distances from start to all other nodes as infinity
         distances = {node: float('infinity') for node in adjacency_list}
-        distances[start] = 0 # Distance from start to start is 0
+        distances[start.getIATA()] = 0 # Distance from start to start is 0
 
         # Initialize priority queue with start node
-        priority_queue = [(Haversine(coordinates[start][1], coordinates[start][0], coordinates[end][1], coordinates[end][0]), 0, start)]
+        heuristicCost = Haversine(double(start.getLongitude()), double(start.getLatitude()), double(end.getLongitude()), double(end.getLatitude()))
+        priority_queue = [(heuristicCost, 0, start.getIATA())]
         predecessors = {} # Keep track of predecessors
+        end_coordinate = (double(end.getLongitude()), double(end.getLatitude()))
 
         while priority_queue:
             # pop from heap to get smallest (estimated_total_cost, current_distance, current_node) pair in priority queue
             estimated_total_cost, current_distance, current_node = heapq.heappop(priority_queue)
 
             # skip if we have already found a shorter path to this node
-            if current_node == end:
+            if current_node == end.getIATA():
                 break
 
             # explore neighbors of the current node
@@ -89,24 +93,24 @@ def A_star(adjacency_list, start, end, coordinates):
                 # update distance once a shorter path is found
                 if distance < distances[neighbour]:
                     distances[neighbour] = distance
-                    neighbour_coordinate = coordinates[neighbour]
-                    end_coordinate = coordinates[end]
-                    estimated_cost_to_end = Haversine(neighbour_coordinate[1], neighbour_coordinate[0], end_coordinate[1], end_coordinate[0])
+                    neighbour = airportsBST.get(neighbour)
+                    neighbour_coordinate = (double(neighbour.getLongitude()), double(neighbour.getLatitude()))
+                    estimated_cost_to_end = Haversine(neighbour_coordinate[0], neighbour_coordinate[1], end_coordinate[0], end_coordinate[1])
                     total_estimated_cost = distance + estimated_cost_to_end 
-                    heapq.heappush(priority_queue, (total_estimated_cost, distance, neighbour))
-                    predecessors[neighbour] = current_node
+                    heapq.heappush(priority_queue, (total_estimated_cost, distance, neighbour.getIATA()))
+                    predecessors[neighbour.getIATA()] = current_node
         
         # backtrack to construct the shortest path
         shortest_path = []
-        current_node = end
-        while current_node != start:
+        current_node = end.getIATA()
+        while current_node != start.getIATA():
             shortest_path.append(current_node)
-            current_node = predecessors.get(current_node, start) # If no predecessor, then we have reached the start
-        shortest_path.append(start)
+            current_node = predecessors.get(current_node, start.getIATA()) # If no predecessor, then we have reached the start
+        shortest_path.append(start.getIATA())
         shortest_path.reverse()  # Reverse the path to get start to end order
         
         # Return the shortet path and the distance from the start to the end
-        return shortest_path, distances[end]
+        return shortest_path, distances[end.getIATA()]
     except KeyError:
         raise KeyError("No route exist for given airports")
 

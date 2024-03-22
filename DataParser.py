@@ -1,10 +1,12 @@
 import os
 import json
-
+import csv
 from numpy import double
 from AdjacencyList_DiGraph import DiGraph
 from FlightRoute import FlightRoute
 from Airport import Airport
+from bst import bst
+
 
 # Parse flight routes into an adjacency list, based on data from asia flight routes json file
 # returns adjacency list
@@ -97,7 +99,7 @@ def AirportsDictToList(airportsDict) -> list[Airport]:
     
     # for every airport object, parse into list of airport codes and sort alphabetically
     for airports in airportsDict:
-        airport = Airport(airports['airportName'], airports['city'], airports['country'], airports['IATA'], airports['latitude'], airports['longitude'])
+        airport = Airport(airports['airportID'], airports['airportName'], airports['city'], airports['country'], airports['IATA'], airports['ICAO'], airports['latitude'], airports['longitude'])
         airportsList.append(airport)
     
     return airportsList
@@ -112,3 +114,22 @@ def getCoordinates() -> dict:
         coordinates[airports['IATA']] = (double(airports['longitude']), double(airports['latitude']))
         
     return coordinates
+
+
+# converts airports csv data into a binary search tree of nodes with airport IATA code as key and corresponding airport object as value
+def create_airport_bst():
+    # Open the CSV file and read the data
+    with open(os.getcwd() + "\\datasets\\AsiaAirports.csv", newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)  # Skip the header row
+        data = [row for row in reader]
+     
+    bstReadyDict = {}
+    
+    for row in data:
+        bstReadyDict[row[4]] = (Airport(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
+        
+    bstOfAirports = bst()
+    bstOfAirports.createBalancedTree(bstReadyDict)
+    
+    return bstOfAirports
