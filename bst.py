@@ -54,6 +54,10 @@ class bst:
         x = node.right
         node.right = x.left
         x.left = node
+        
+        self.update_height(x)
+        self.update_height(node)
+        
         return x
                 
     
@@ -62,67 +66,99 @@ class bst:
         x = node.left
         node.left = x.right
         x.right = node
+        
+        self.update_height(node)
+        self.update_height(x)
+        
         return x
         
         
-    # for a left-right imbalance, first rotate left to become LL-imbalance, then rotate right
-    def rotateLeftRight(self, node):
-        node.left = self.rotateLeft(node.left)
-        node = self.rotateRight(node)
-        return node
+    # # for a left-right imbalance, first rotate left to become LL-imbalance, then rotate right
+    # def rotateLeftRight(self, node):
+    #     node.left = self.rotateLeft(node.left)
+    #     node = self.rotateRight(node)
+    #     return node
         
         
-    #for a right-left imbalance, first rotate right to become RR-imbalance, then rotate left
-    def rotateRightLeft(self, node):
-        node.right = self.rotateRight(node.right)
-        node = self.rotateLeft(node)
-        return node
+    # #for a right-left imbalance, first rotate right to become RR-imbalance, then rotate left
+    # def rotateRightLeft(self, node):
+    #     node.right = self.rotateRight(node.right)
+    #     node = self.rotateLeft(node)
+    #     return node
     
     
-    def rotate(self, node, balFactor):
-        leftSubTreeBalFactor = self.calculateBalanceFactor(node.left)
-        rightSubTreeBalFactor = self.calculateBalanceFactor(node.right)
-        # if node balance factor 2 and above and node.left balance factor is 1, means left-left imbalance
-        if balFactor == 2 and leftSubTreeBalFactor == 1:
-            node = self.rotateRight(node)
-        # if node balance factor 2 and above node.left balance factor is -1, means left-right imbalance
-        elif balFactor == 2 and leftSubTreeBalFactor == -1:
-            node = self.rotateLeftRight(node)
-        # if node balance factor is -2 and node.right balance is 1, means right-left imbalance
-        elif balFactor == -2 and rightSubTreeBalFactor == 1:
-            node = self.rotateRightLeft(node)
-        # if node balance factor is -2 and node.right balance is -1, means right-right imbalance
-        elif balFactor == -2 and rightSubTreeBalFactor == -1:
-            node = self.rotateLeft(node)
-        return node
+    # def rotate(self, node, balFactor):
+    #     leftSubTreeBalFactor = self.calculateBalanceFactor(node.left)
+    #     rightSubTreeBalFactor = self.calculateBalanceFactor(node.right)
+    #     # if node balance factor 2 and above and node.left balance factor is 1, means left-left imbalance
+    #     if balFactor == 2 and leftSubTreeBalFactor == 1:
+    #         node = self.rotateRight(node)
+    #     # if node balance factor 2 and above node.left balance factor is -1, means left-right imbalance
+    #     elif balFactor == 2 and leftSubTreeBalFactor == -1:
+    #         node = self.rotateLeftRight(node)
+    #     # if node balance factor is -2 and node.right balance is 1, means right-left imbalance
+    #     elif balFactor == -2 and rightSubTreeBalFactor == 1:
+    #         node = self.rotateRightLeft(node)
+    #     # if node balance factor is -2 and node.right balance is -1, means right-right imbalance
+    #     elif balFactor == -2 and rightSubTreeBalFactor == -1:
+    #         node = self.rotateLeft(node)
+    #     return node
             
         
-    # finds balance factor of a node by taking left subtree height - right subtree height
-    def calculateBalanceFactor(self, node):
-        if node is None:
-            return 0
-        leftSubTreeHeight = self.altHeight(node.left)
-        rightSubTreeHeight = self.altHeight(node.right)
-        return leftSubTreeHeight - rightSubTreeHeight
+    # # finds balance factor of a node by taking left subtree height - right subtree height
+    # def calculateBalanceFactor(self, node):
+    #     if node is None:
+    #         return 0
+    #     leftSubTreeHeight = self.altHeight(node.left)
+    #     rightSubTreeHeight = self.altHeight(node.right)
+    #     return leftSubTreeHeight - rightSubTreeHeight
+    
+    
+    def balance(self, node):
+        # update height of current node
+        self.update_height(node)
+        
+        # check balance factor
+        balance = self.balance_factor(node)
+        
+        # left-left imbalance
+        if balance > 1 and self.balance_factor(node.left) >= 0:
+            return self.rotateRight(node)
+        
+        # right-right imbalance
+        if balance < -1 and self.balance_factor(node.right) <= 0:
+            return self.rotateLeft(node)
+        
+        # Left-Right Case
+        if balance > 1 and self.balance_factor(node.left) < 0:
+            node.left = self.rotateLeft(node.left)
+            return self.rotateRight(node)
+
+        # Right-Left Case
+        if balance < -1 and self.balance_factor(node.right) > 0:
+            node.right = self.rotateRight(node.right)
+            return self.rotateLeft(node)
+
+        return node
+    
+    
+    def balance_factor(self, node):
+        return self.height(node.left) - self.height(node.right)
         
     
     # AVL insert recursive helper function
     def AVLInsert2(self, node, key, val):
         if node is None:
             return Node(key, val)
+        
         if key < node.key:
             node.left = self.AVLInsert2(node.left, key, val)
-            balFactor = self.calculateBalanceFactor(node)
-            if balFactor > 1 or balFactor < -1:
-                node = self.rotate(node, balFactor)
         elif key > node.key:
             node.right = self.AVLInsert2(node.right, key, val)     
-            balFactor = self.calculateBalanceFactor(node)
-            if balFactor > 1 or balFactor < -1:
-                node = self.rotate(node, balFactor)
         else:
-            node.val = val
-        return node
+            return node
+        
+        return self.balance(node)
     
     
     # AVL tree insertion
@@ -198,26 +234,17 @@ class bst:
         return None
     
     
-    #find height helper function
-    def findHeight(self, node):
-        if node is None:
-            return -1
-        else:        
-            return max(self.findHeight(node.left), self.findHeight(node.right)) + 1
+    #update height helper function
+    def update_height(self, node):    
+        node.height = max(self.height(node.left), self.height(node.right)) + 1
     
     
-    #given a key, find the node and obtain the height, you are allowed to create other helper functions
-    def height(self, key):
-        height = 0
-        # find the node with key equal to given key
-        temp = self.search(key)
-        # if temp is none means no node exist with key equal to given key
-        if temp is None:
-            return None
+    #given a node, return height
+    def height(self, node):
+        if not node:
+            return 0
         else:
-            # call findHeight recursive helper function with temp node, returns height of temp node
-            height = self.findHeight(temp)
-            return height
+            return node.height
         
     
     # given a node, find it's height
@@ -313,6 +340,7 @@ class Node:
     right = None
     key = ''
     val = None
+    height = 0
 
     def __init__(self, key, val):
         self.key = key

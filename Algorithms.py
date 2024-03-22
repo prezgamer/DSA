@@ -73,10 +73,10 @@ def A_star(adjacency_list, start, end, airportsBST):
         distances[start.getIATA()] = 0 # Distance from start to start is 0
 
         # Initialize priority queue with start node
-        heuristicCost = Haversine(double(start.getLongitude()), double(start.getLatitude()), double(end.getLongitude()), double(end.getLatitude()))
+        heuristicCost = Haversine(start.getLongitude(), start.getLatitude(), end.getLongitude(), end.getLatitude())
         priority_queue = [(heuristicCost, 0, start.getIATA())]
         predecessors = {} # Keep track of predecessors
-        end_coordinate = (double(end.getLongitude()), double(end.getLatitude()))
+        end_coordinate = (end.getLongitude(), end.getLatitude())
 
         while priority_queue:
             # pop from heap to get smallest (estimated_total_cost, current_distance, current_node) pair in priority queue
@@ -94,7 +94,7 @@ def A_star(adjacency_list, start, end, airportsBST):
                 if distance < distances[neighbour]:
                     distances[neighbour] = distance
                     neighbour = airportsBST.get(neighbour)
-                    neighbour_coordinate = (double(neighbour.getLongitude()), double(neighbour.getLatitude()))
+                    neighbour_coordinate = (neighbour.getLongitude(), neighbour.getLatitude())
                     estimated_cost_to_end = Haversine(neighbour_coordinate[0], neighbour_coordinate[1], end_coordinate[0], end_coordinate[1])
                     total_estimated_cost = distance + estimated_cost_to_end 
                     heapq.heappush(priority_queue, (total_estimated_cost, distance, neighbour.getIATA()))

@@ -9,13 +9,10 @@ class RequestHandler(BaseHTTPRequestHandler):
     
     print("Setting up server...")
     
-    # create adjacency list of flight routes
-    adjListGraph = ParseToAdjList()
-    # create list of all airport's coordinates for A*star algorithm
-    # coordinates = getCoordinates()ss
     # create binary search tree of airport objects
     airportsBST = create_airport_bst()
-    
+    # create adjacency list of flight routes
+    adjListGraph = ParseToAdjList(airportsBST)
     
     def _set_headers(self):
         self.send_response(200)
