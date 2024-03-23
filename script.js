@@ -4,6 +4,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
+function clear() {
+    document.getElementById('fromAirport').value = '';
+    document.getElementById('toAirport').value = '';
+}
+
+// Event listener for the clear button
+document.getElementById('clearButton').addEventListener('click', function(event) {
+    clear();
+});
+
 async function runPy() {
     const fromAirport = document.getElementById('fromAirport').value;
     const toAirport = document.getElementById('toAirport').value;
