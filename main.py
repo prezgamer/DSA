@@ -1,11 +1,11 @@
 from types import NoneType
 from Airport import Airport
-from DataParser import ParseRoutes, ParseAirports, RoutesDictToList, AirportsDictToList, ParseToAdjList, getCoordinates
-from Algorithms import A_star, Dijkstra
+from DataParser import ParseAirports
+from Algorithms import A_star
 from FlightRoute import FlightRoute
 
 
-def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph, cost):
+def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
     
     # get start and end airport objects
     start, end = getAirport(fromAirport, toAirport, airportsBST)
@@ -17,7 +17,7 @@ def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph, cost):
         try:
             shortest_path, shortest_distance = A_star(adjListGraph.getAdjList(), start, end, airportsBST)
             shortest_distance = '{:.2f}'.format(shortest_distance)
-            cost = shortest_distance * 1.2
+            cost = float(shortest_distance) * 1.2
             pathNodeCoordinates = []
             
             for node in shortest_path:
