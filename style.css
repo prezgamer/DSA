@@ -1,8 +1,10 @@
-body, html {
+body,
+html {
     height: 100%;
     margin: 0;
     font-family: 'Arial', sans-serif;
-    background-color: #282a36; /* Dark background for style */
+    background-color: #282a36;
+    /* Dark background for style */
 }
 
 header {
@@ -11,13 +13,14 @@ header {
     padding: 20px;
     text-align: center;
     align-items: center;
-    display: flex;  
+    display: flex;
     justify-content: center;
 }
 
 
 header h1 {
-    margin-right: 20px; /* Adjust spacing between the icon and text */
+    margin-right: 20px;
+    /* Adjust spacing between the icon and text */
 }
 
 .welcome {
@@ -32,60 +35,67 @@ header h1 {
 .search-box {
     display: flex;
     justify-content: space-around;
-    padding: 20px; 
+    padding: 20px;
     align-items: center;
 }
 
 .search-box input[type="text"],
-*{
+* {
     margin: 0;
     padding: 0;
     outline: none;
     box-sizing: border-box;
-    
-    
-  }
-  .wrapper{
+
+
+}
+
+.wrapper {
     width: 300px;
     background: #fff;
     border-radius: 5px;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    
-  }
-  .wrapper .input-data{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.wrapper .input-data {
     height: 30px;
     width: 100%;
     position: relative;
-  }
-  .wrapper .input-data input{
+}
+
+.wrapper .input-data input {
     height: 100%;
     width: 100%;
     border: none;
     font-size: 15px;
     border-bottom: 2px solid silver;
-  }
-  .input-data input:focus ~ label,
-  .input-data input:valid ~ label{
+}
+
+.input-data input:focus~label,
+.input-data input:valid~label {
     transform: translateY(-20px);
     font-size: 13px;
     color: #4158d0;
-  }
-  .wrapper .input-data label{
+}
+
+.wrapper .input-data label {
     position: absolute;
     bottom: 10px;
     left: 0;
     color: grey;
     pointer-events: none;
     transition: all 0.3s ease;
-  }
-  .input-data .underline{
+}
+
+.input-data .underline {
     position: absolute;
     height: 2px;
     width: 100%;
     bottom: 0;
-  }
-  .input-data .underline:before{
+}
+
+.input-data .underline:before {
     position: absolute;
     content: "";
     height: 100%;
@@ -94,50 +104,63 @@ header h1 {
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 0.3s ease;
-  }
-  .input-data input:focus ~ .underline:before,
-  .input-data input:valid ~ .underline:before{
+}
+
+.input-data input:focus~.underline:before,
+.input-data input:valid~.underline:before {
     transform: scaleX(1);
-  }
+}
 
 .search-box button {
     padding: 25px;
     border: none;
     border-radius: 5px;
     font-size: 15px;
-    
+
 }
 
 .search-box button {
-    background-color: #50fa7b; /* Greenish button */
-    color: #282a36; /* Dark text */
+    background-color: #50fa7b;
+    /* Greenish button */
+    color: #282a36;
+    /* Dark text */
     cursor: pointer;
 }
+
 .search-box button:hover {
-    background-color: rgba(13, 206, 55, 0.919); /* darker green on hover */
+    background-color: rgba(13, 206, 55, 0.919);
+    /* darker green on hover */
 }
 
 #clearButton {
-    background-color: #ff0000; /* red color */
-    color: white; /* text color */
-    border: none; /* remove border */
-    cursor: pointer; /* change cursor to pointer */
+    background-color: #ff0000;
+    /* red color */
+    color: white;
+    /* text color */
+    border: none;
+    /* remove border */
+    cursor: pointer;
+    /* change cursor to pointer */
 }
 
 #clearButton:hover {
-    background-color: #cc0000; /* darker red color on hover */
+    background-color: #cc0000;
+    /* darker red color on hover */
 }
 
 /* Map container */
 #map {
-    height: 65%; /* You can set the height as needed */
+    height: 65%;
+    /* You can set the height as needed */
     width: 100%;
 }
 
 /* Route display */
 #routeDisplay {
-    background-color: #f0f0f0; /* Light background for visibility */
-    color: #333; /* Dark text for contrast */
+    background-color: #f0f0f0;
+    /* Light background for visibility */
+    color: #333;
+    /* Dark text for contrast */
     padding: 20px;
     margin-top: 20px;
 }
@@ -154,4 +177,3 @@ header h1 {
         margin: 5px 0;
     }
 }
-
