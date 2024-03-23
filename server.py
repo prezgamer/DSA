@@ -29,7 +29,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         params = parse_qs(query)
         
         try:
-            results = main(params['param1'][0], params['param2'][0], self.airportsBST, self.adjListGraph)
+            results = main(params['param1'][0], params['param2'][0], self.airportsBST, self.adjListGraph, self.cost)
         except KeyError:
             print("No route exists for given airports")
             results = None

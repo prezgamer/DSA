@@ -5,7 +5,7 @@ from Algorithms import A_star, Dijkstra
 from FlightRoute import FlightRoute
 
 
-def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
+def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph, cost):
     
     # get start and end airport objects
     start, end = getAirport(fromAirport, toAirport, airportsBST)
@@ -17,6 +17,7 @@ def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
         try:
             shortest_path, shortest_distance = A_star(adjListGraph.getAdjList(), start, end, airportsBST)
             shortest_distance = '{:.2f}'.format(shortest_distance)
+            cost = shortest_distance * 1.2
             pathNodeCoordinates = []
             
             for node in shortest_path:
@@ -28,7 +29,7 @@ def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
             for i in range(0, len(shortest_path)):
                 shortest_path[i] = airportsBST.get(shortest_path[i]).getName()
                 
-            return shortest_path, pathNodeCoordinates, shortest_distance
+            return shortest_path, pathNodeCoordinates, shortest_distance, cost
         except KeyError:
             raise KeyError("No route exist for given airports")
         
@@ -88,4 +89,4 @@ def validateRoute(source, dest, routesList) -> FlightRoute | None:
                 
     
 # if __name__ == "__main__":
-#     main('Singapore', 'Chinggis')
+#     main('singapore', 'narita')

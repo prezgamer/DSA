@@ -23,6 +23,7 @@ async function runPy() {
             shortestPathInfo = routingInfo[0]
             pathNodeCoordinates = routingInfo[1]
             totalDistance = routingInfo[2]
+            totalCost = routingInfo[3]
 
             // Clear previous markers and paths
             map.eachLayer(function(layer) {
@@ -89,6 +90,7 @@ async function runPy() {
                 <strong>Flight Details:</strong><br>
                 Shortest Path: ${shortestPathInfo}<br>
                 Total Distance: ${totalDistance}km<br>
+                Total Cost: $${totalCost}<br>
             `;
         }
     }
