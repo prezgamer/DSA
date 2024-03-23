@@ -10,6 +10,13 @@ header {
     color: white;
     padding: 20px;
     text-align: center;
+    align-items: center;
+    display: flex;  
+    justify-content: center;
+}
+
+header h1 {
+    margin-right: 20px; /* Adjust spacing between the icon and text */
 }
 
 .search-box {
@@ -29,6 +36,21 @@ header {
     background-color: #50fa7b; /* Greenish button */
     color: #282a36; /* Dark text */
     cursor: pointer;
+}
+.search-box button:hover {
+    background-color: rgba(13, 206, 55, 0.919); /* darker green on hover */
+}
+
+#clearButton {
+    background-color: #ff0000; /* red color */
+    color: white; /* text color */
+    border: none; /* remove border */
+    padding: 10px 20px; /* adjust padding */
+    cursor: pointer; /* change cursor to pointer */
+}
+
+#clearButton:hover {
+    background-color: #cc0000; /* darker red color on hover */
 }
 
 /* Map container */
