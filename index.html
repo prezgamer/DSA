@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +10,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    
+
 </head>
+
 <body>
     <header>
         <h1>Flight Route Finder</h1>
-       <i class="fa fa-plane" style="font-size:36px;"></i>
-        
+        <i class="fa fa-plane" style="font-size:36px;"></i>
     </header>
-    <div class="search-box">
-        <input type="text" id="fromAirport" placeholder="Departure airport">
-        <input type="text" id="toAirport" placeholder="Destination airport">
-        <button type="submit" id="searchForm" onclick="runPy()">Explore</button>
-        <button id="clearButton" onclick="clear()">Clear</button>
+    <div class="welcome">
+        <h1>Welcome!</h1>
+        <p><br>Enter the departure and destination airports to explore flights.
+        </p>
     </div>
+
+    <div class="search-box">
+        <div class="wrapper">
+            <div class="input-data">
+                <input id="fromAirport" type="text" required>
+                <div class="underline"></div>
+                <label>Departure airport</label>
+            </div>
+        </div>
+        <div> To </div>
+        <div class="wrapper">
+            <div class="input-data">
+                <input id="toAirport" type="text" required>
+                <div class="underline"></div>
+                <label>Destination airport</label>
+            </div>
+        </div>
+        
+        <button type="submit" id="searchForm" onclick="runPy()">Explore Flights</button>
+        <button id="clearButton" onclick="clear()">Clear Search</button>
+
+
+    </div>
+
+
+
+
     <!-- Map container -->
     <div id="map"></div>
     <!-- Route display -->
     <div id="routeDisplay"></div>
     <script src="script.js"></script>
+
+
 </body>
+
 </html>
