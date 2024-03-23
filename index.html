@@ -6,17 +6,22 @@
     <title>Flight Route Finder</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    
 </head>
 <body>
     <header>
         <h1>Flight Route Finder</h1>
+       <i class="fa fa-plane" style="font-size:36px;"></i>
+        
     </header>
     <div class="search-box">
         <input type="text" id="fromAirport" placeholder="Departure airport">
         <input type="text" id="toAirport" placeholder="Destination airport">
         <button type="submit" id="searchForm" onclick="runPy()">Explore</button>
+        <button id="clearButton" onclick="clear()">Clear</button>
     </div>
     <!-- Map container -->
     <div id="map"></div>
@@ -25,6 +30,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
