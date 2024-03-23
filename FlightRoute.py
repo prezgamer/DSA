@@ -2,7 +2,7 @@ class FlightRoute:
     airline = ""
     sourceAirport = ""
     destinationAirport = ""
-    distance = 0
+    distance = 0.0
 
     def __init__(self, airline, sourceAirport, destinationAirport, distance):
         self.airline = airline

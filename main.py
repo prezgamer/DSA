@@ -42,14 +42,13 @@ def getAirport(fromAirport, toAirport, airportsBST):
     for airport in airportsDict:
         if start is None and airport['airportName'].casefold().__contains__(fromAirport.casefold()):
             start = airport['IATA']
+            start = airportsBST.get(start)
         elif end is None and airport['airportName'].casefold().__contains__(toAirport.casefold()):
             end = airport['IATA']
+            end = airportsBST.get(end)
         elif start is not None and end is not None:
             break
         
-    start = airportsBST.get(start)
-    end = airportsBST.get(end)
-    
     return start, end
     
     
