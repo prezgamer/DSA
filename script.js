@@ -4,9 +4,19 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
+
+
 function clear() {
     document.getElementById('fromAirport').value = '';
     document.getElementById('toAirport').value = '';
+
+    // Clear markers
+    map.eachLayer(function(layer) {
+        if (!!layer.toGeoJSON && !(layer instanceof L.TileLayer)) {
+            map.removeLayer(layer);
+        }
+    });
+
 }
 
 // Event listener for the clear button
@@ -84,14 +94,37 @@ async function runPy() {
                         .bindPopup('Connecting Airport: ' + shortestPathInfo[i+1])
                         .openPopup();
                 }
+                // Define custom flight icon
+                const flightIcon = L.icon({
+                iconUrl: 'images/airplane.png', // Replace 'path_to_your_flight_icon_image' with the actual path to your flight icon image
+                iconSize: [32, 32], // Size of the icon
+                iconAnchor: [16, 16] // Anchor point of the icon
+                });
 
                 // Draw the route
                 const routeCoordinates = [
-                    [fromLatitude, fromLongitude],
-                    [toLatitude, toLongitude]
+                [fromLatitude, fromLongitude],
+                [toLatitude, toLongitude]
                 ];
                 const routePath = L.polyline(routeCoordinates, {color: 'blue'}).addTo(map);
                 map.fitBounds(routePath.getBounds());
+
+                // Calculate midpoint coordinates
+                const midLatitude = (fromLatitude + toLatitude) / 2;
+                const midLongitude = (fromLongitude + toLongitude) / 2;
+
+                // Add a flight icon marker at the midpoint coordinates of the route
+                L.marker([midLatitude, midLongitude], { icon: flightIcon }).addTo(map);
+
+
+
+                // // Draw the route
+                // const routeCoordinates = [
+                //     [fromLatitude, fromLongitude],
+                //     [toLatitude, toLongitude]
+                // ];
+                // const routePath = L.polyline(routeCoordinates, {color: 'blue'}).addTo(map);
+                // map.fitBounds(routePath.getBounds());
             }
 
             // Display route details
