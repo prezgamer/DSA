@@ -16,6 +16,9 @@ function clear() {
             map.removeLayer(layer);
         }
     });
+    // Clear flight details
+    const displayElement = document.getElementById('routeDisplay');
+    displayElement.innerHTML = '';
 
 }
 
