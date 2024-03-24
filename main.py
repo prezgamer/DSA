@@ -17,7 +17,7 @@ def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
         try:
             shortest_path, shortest_distance = A_star(adjListGraph.getAdjList(), start, end, airportsBST)
             shortest_distance = '{:.2f}'.format(shortest_distance)
-            cost = float(shortest_distance) * 1.2
+            cost = float(shortest_distance) * 0.2
             pathNodeCoordinates = []
             
             for node in shortest_path:
