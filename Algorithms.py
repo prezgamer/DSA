@@ -1,8 +1,6 @@
 import heapq
 from math import radians, cos, sin, asin, sqrt
 
-from numpy import double
-
 """
 Calculate the great circle distance in kilometers between two points 
 on the earth (specified in decimal degrees)
@@ -65,7 +63,7 @@ def Dijkstra(adjacency_list, start, end):
         raise KeyError("No route exist for given airports")
 
 
-# calculate the shortest path from start to end using A* algorithm with the given adjacency list and coordinates 
+# calculate the shortest path from start to end using A* algorithm 
 def A_star(adjacency_list, start, end, airportsBST):
     try:
         # Initialize distances from start to all other nodes as infinity
@@ -113,30 +111,3 @@ def A_star(adjacency_list, start, end, airportsBST):
         return shortest_path, distances[end.getIATA()]
     except KeyError:
         raise KeyError("No route exist for given airports")
-
-# Example coordinates for each node (airport)
-# coordinates = {
-#     'A': (34.5, -123.4),  
-#     'B': (35.4, -124.5), 
-#     'C': (36.3, -125.6),  
-#     'D': (37.2, -126.7),
-#     'E': (38.1, -127.8),
-# }
-
-# # Example adjacency list of flight routes
-# adjacency_list = {
-#     'A': [('B', 10), ('C', 3)],
-#     'B': [('C', 1), ('D', 2)],
-#     'C': [('B', 4), ('D', 8), ('E', 2)],
-#     'D': [('E', 7)],
-#     'E': [('D', 9)],
-# }
-
-# start = 'A'
-# end = 'E'
-
-# # Call the A_star function with the example data
-# shortest_path, shortest_distance = A_star(adjacency_list, start, end, coordinates)
-# # shortest_path, shortest_distance = Dijkstra(adjacency_list, start, end)
-# print(f"The shortest path from {start} to {end} is: {shortest_path}")
-# print(f"The shortest distance from {start} to {end} is: {shortest_distance} km")

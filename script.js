@@ -172,6 +172,9 @@ async function runPy() {
                 Total Cost: $${totalCost}<br>
                 Estimated Travel Time: ${estimatedTravelTime}<br> 
             `;
+
+            // auto scrolls down to bring route details into view
+            displayElement.scrollIntoView();
         }
     }
     catch (error) {

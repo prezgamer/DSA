@@ -1,5 +1,3 @@
-from types import NoneType
-from Airport import Airport
 from DataParser import ParseAirports
 from Algorithms import A_star
 from FlightRoute import FlightRoute
@@ -86,6 +84,3 @@ def validateRoute(source, dest, routesList) -> FlightRoute | None:
         
     return None
                 
-    
-# if __name__ == "__main__":
-#     main('singapore', 'narita')

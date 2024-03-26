@@ -1,7 +1,7 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
-from DataParser import ParseToAdjList, create_airport_bst, getCoordinates
+from DataParser import ParseToAdjList, create_airport_bst
 from main import main
 
 
