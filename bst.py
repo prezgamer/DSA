@@ -1,8 +1,3 @@
-import os
-import sys
-import csv
-from Airport import Airport
-
 class bst:
     global inOrderNodes, preOrderNodes, postOrderNodes
     inOrderNodes = []
