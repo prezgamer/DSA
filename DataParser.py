@@ -1,7 +1,6 @@
 import os
 import json
 import csv
-from numpy import double
 from AdjacencyList_DiGraph import DiGraph
 from Algorithms import Haversine
 from FlightRoute import FlightRoute
@@ -99,7 +98,7 @@ def create_airport_bst():
     bstReadyDict = {}
     
     for row in data:
-        bstReadyDict[row[4]] = (Airport(row[0], row[1], row[2], row[3], row[4], row[5], double(row[6]), double(row[7])))
+        bstReadyDict[row[4]] = (Airport(row[0], row[1], row[2], row[3], row[4], row[5], float(row[6]), float(row[7])))
         
     bstOfAirports = bst()
     bstOfAirports.createBalancedTree(bstReadyDict)
