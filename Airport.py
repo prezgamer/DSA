@@ -21,6 +21,9 @@ class Airport:
     def getIATA(self):
         return self.IATA
     
+    def getCountry(self):
+        return self.country
+    
     def getName(self):
         return self.airportName
     
