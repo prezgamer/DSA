@@ -166,7 +166,7 @@ async function runPy() {
             // Display route details 
             const displayElement = document.getElementById('routeDisplay'); 
             displayElement.innerHTML = ` 
-                <strong>Flight Details:</strong><br> 
+                <u><strong>Flight Details:</strong><br></u>
                 Shortest Path: ${pathDisplay}<br> 
                 Total Distance: ${totalDistance}km<br> 
                 Total Cost: $${totalCost}<br>

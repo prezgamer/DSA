@@ -25,7 +25,7 @@ def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
                 pathNodeCoordinates.append((longitude, latitude))
 
             for i in range(0, len(shortest_path)):
-                shortest_path[i] = airportsBST.get(shortest_path[i]).getCountry(),airportsBST.get(shortest_path[i]).getName()
+                shortest_path[i] = airportsBST.get(shortest_path[i]).getCountry(),airportsBST.get(shortest_path[i]).getName(),airportsBST.get(shortest_path[i]).getIATA()
                 
             return shortest_path, pathNodeCoordinates, shortest_distance, cost
         except KeyError:
