@@ -25,7 +25,7 @@ def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
                 pathNodeCoordinates.append((longitude, latitude))
 
             for i in range(0, len(shortest_path)):
-                shortest_path[i] = "{country},({IATA})".format(country = airportsBST.get(shortest_path[i]).getCountry(), IATA = airportsBST.get(shortest_path[i]).getIATA())
+                shortest_path[i] = "{country} ({IATA}), {name}".format(country = airportsBST.get(shortest_path[i]).getCountry(), IATA = airportsBST.get(shortest_path[i]).getIATA(), name = airportsBST.get(shortest_path[i]).getName())
             return shortest_path, pathNodeCoordinates, shortest_distance, cost
         except KeyError:
             raise KeyError("No route exist for given airports")
