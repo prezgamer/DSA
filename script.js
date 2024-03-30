@@ -4,24 +4,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-
-
-// JavaScript
-//Assuming you have an array of airport names
-const airportNames = ["Los Angeles International Airport", "John F. Kennedy International Airport", /* more airport names... */];
-
-const datalist = document.getElementById('airports');
-
-airportNames.forEach(airport => {
-    const option = document.createElement('option');
-    option.value = airport;
-    datalist.appendChild(option);
-});
-
-
-
-
-
 function clear() {
     document.getElementById('fromAirport').value = '';
     document.getElementById('toAirport').value = '';
@@ -190,23 +172,35 @@ async function runPy() {
 };
 
 async function runPy2() {
-    let url = new URL('http://127.0.0.1:8000')
-    // let params = {param1: fromAirport, param2: toAirport}
-    // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+    let url = new URL('http://127.0.0.1:8000');
 
     try {
-        response = await fetch(url);
+        const response = await fetch(url);
         const airports = await response.json();
 
-        for (let i = 0; i < airports.length; i++) {
-            console.log(airports[i]);
-        }
-    }
-    catch (error) {
+        // Use a Set to store unique airport names
+        const uniqueAirportNames = new Set();
+
+        // Extract and add airport names to the set
+        airports.forEach(airport => {
+            uniqueAirportNames.add(airport.airportName);
+        });
+
+        // Populate the datalist element with unique airport names
+        const datalist = document.getElementById('airports');
+        datalist.innerHTML = ''; // Clear existing options
+        uniqueAirportNames.forEach(airportName => {
+            const option = document.createElement('option');
+            option.value = airportName;
+            datalist.appendChild(option);
+        });
+    } catch (error) {
         console.error('There was an error fetching the data:', error);
-        window.alert("Network error when trying to fetch data. Server may be down.")
+        window.alert("Network error when trying to fetch data. Server may be down.");
     }
 }
+
+
 
 // document.getElementById('searchForm').addEventListener('submit', function(event) {
 //     event.preventDefault(); // Prevents form from submitting in the traditional way
