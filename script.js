@@ -4,6 +4,56 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
+
+const currencies = [
+    { code: "SGD", name: "Singapore Dollar" },
+    { code: "SGD", name: "Singapore Dollar" },
+    { code: "EUR", name: "Euro" },
+    { code: "USD", name: "US Dollar" },
+    { code: "JPY", name: "Japanese Yen" },
+    { code: "BGN", name: "Bulgarian Lev" },
+    { code: "CZK", name: "Czech Republic Koruna" },
+    { code: "DKK", name: "Danish Krone" },
+    { code: "GBP", name: "British Pound Sterling" },
+    { code: "HUF", name: "Hungarian Forint" },
+    { code: "PLN", name: "Polish Zloty" },
+    { code: "RON", name: "Romanian Leu" },
+    { code: "SEK", name: "Swedish Krona" },
+    { code: "CHF", name: "Swiss Franc" },
+    { code: "ISK", name: "Icelandic Króna" },
+    { code: "NOK", name: "Norwegian Krone" },
+    { code: "HRK", name: "Croatian Kuna" },
+    { code: "RUB", name: "Russian Ruble" },
+    { code: "TRY", name: "Turkish Lira" },
+    { code: "AUD", name: "Australian Dollar" },
+    { code: "BRL", name: "Brazilian Real" },
+    { code: "CAD", name: "Canadian Dollar" },
+    { code: "CNY", name: "Chinese Yuan" },
+    { code: "HKD", name: "Hong Kong Dollar" },
+    { code: "IDR", name: "Indonesian Rupiah" },
+    { code: "ILS", name: "Israeli New Sheqel" },
+    { code: "INR", name: "Indian Rupee" },
+    { code: "KRW", name: "South Korean Won" },
+    { code: "MXN", name: "Mexican Peso" },
+    { code: "MYR", name: "Malaysian Ringgit" },
+    { code: "NZD", name: "New Zealand Dollar" },
+    { code: "PHP", name: "Philippine Peso" },
+    { code: "THB", name: "Thai Baht" },
+    { code: "ZAR", name: "South African Rand" },
+    
+  ];
+
+  // Get the select element
+  const selectElement = document.getElementById('currency');
+
+  // Loop through the currencies array and create options
+  currencies.forEach(currency => {
+    const option = document.createElement('option');
+    option.value = currency.code; // Set the value to the currency code
+    option.textContent = `${currency.code} - ${currency.name}`; // Set the text content to the currency name
+    selectElement.appendChild(option); // Append the option to the select element
+  });
+
 function clear() {
     document.getElementById('fromAirport').value = '';
     document.getElementById('toAirport').value = '';
@@ -151,12 +201,21 @@ async function runPy() {
             const hours = Math.floor(estFlightTime); 
             const minutes = Math.round((estFlightTime - hours) * 60); 
             const estimatedTravelTime = `${hours} hours ${minutes} minutes`;
+
+            // Retrieve the selected currency from the dropdown box
+            const selectedCurrency = document.getElementById('currency').value;
+
+            // Convert the total cost to the selected currency
+            const convertedCost = await convertCurrency(totalCost, selectedCurrency);
+
+            // Display the converted cost
  
             // Display route details 
             const displayElement = document.getElementById('routeDisplay'); 
+
             displayElement.innerHTML = ` 
                 <h3><u><strong>Flight Details:</strong><br></u></h3>
-                <strong>Shortest Path:</strong> ${pathDisplay}<br> 
+                <h4><strong>Shortest Path:</strong> ${pathDisplay}<br></h4>
                 
                 <table>
                     <tr>
@@ -170,7 +229,7 @@ async function runPy() {
                         <td>${fromAirport}</td>
                         <td>${toAirport}</td>
                         <td>${totalDistance}km</td>
-                        <td>$${totalCost}</td>
+                        <td>$${convertedCost}</td>
                         <td>${estimatedTravelTime}</td>
                     </tr>
                     <tr>
@@ -188,6 +247,76 @@ async function runPy() {
         window.alert("Network error when trying to fetch data. Server may be down.");
     }
 };
+
+// async function convertCurrency(amount, currency) {
+//     // Perform currency conversion using an API or any other method
+//     // You can use a currency conversion API or implement your own logic here
+    
+//     const conversionRates = {
+//         'SGD': 1,  // 1 SGD = 1 SGD
+//         'USD': 0.75, // Example conversion rate for USD
+//         'EUR': 0.67  // Example conversion rate for EUR
+//         // Add more conversion rates for other currencies as needed
+//     };
+
+//     // Calculate the converted amount
+//     const convertedAmount = amount * conversionRates[currency];
+//     return convertedAmount.toFixed(2); // Round to two decimal places
+// }
+
+
+// async function convertCurrency(amount, currency) {
+//     const apiKey = 'fca_live_U9zUYU7KcpW3PTTLaJEIHd8wljcrm7cwXllGwe1i'; // Replace 'YOUR_API_KEY' with your actual API key
+//     const apiUrl = `https://api.freecurrencyapi.com/v1/latest?apikey=${apiKey}`;
+
+//     try {
+//         const response = await fetch(apiUrl);
+//         const data = await response.json();
+
+//         if (data.status === 'success') {
+//             const conversionRates = data.data.currencies;
+//             const rate = conversionRates[currency];
+//             if (rate) {
+//                 const convertedAmount = amount * rate;
+//                 return convertedAmount.toFixed(2); // Round to two decimal places
+//             } else {
+//                 throw new Error(`Conversion rate for ${currency} not found`);
+//             }
+//         } else {
+//             throw new Error('Failed to fetch conversion rates');
+//         }
+//     } catch (error) {
+//         console.error('Currency conversion error:', error);
+//         throw new Error('Currency conversion failed');
+//     }
+// }
+
+async function convertCurrency(amount, currency) {
+    const apiUrl = 'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_U9zUYU7KcpW3PTTLaJEIHd8wljcrm7cwXllGwe1i&currencies=EUR%2CUSD%2CJPY%2CBGN%2CCZK%2CDKK%2CGBP%2CHUF%2CPLN%2CRON%2CSEK%2CCHF%2CISK%2CNOK%2CHRK%2CRUB%2CTRY%2CAUD%2CBRL%2CCAD%2CCNY%2CHKD%2CIDR%2CILS%2CINR%2CKRW%2CMXN%2CMYR%2CNZD%2CPHP%2CTHB%2CZAR&base_currency=SGD';
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        let rate;
+
+        if (currency === 'SGD') {
+            rate = 1; // Conversion rate from SGD to SGD is always 1
+        } else if (data && data.data && data.data[currency]) {
+            rate = data.data[currency];
+        } else {
+            throw new Error(`Conversion rate for ${currency} not found`);
+        }
+
+        const convertedAmount = amount * rate;
+        return convertedAmount.toFixed(2); // Round to two decimal places
+    } catch (error) {
+        console.error('Currency conversion error:', error);
+        throw new Error('Currency conversion failed');
+    }
+}
+
+
 
 async function runPy2() {
     let url = new URL('http://127.0.0.1:8000');
@@ -217,6 +346,8 @@ async function runPy2() {
         window.alert("Network error when trying to fetch data. Server may be down.");
     }
 }
+
+
 
 
 
@@ -270,4 +401,83 @@ async function runPy2() {
 //         Estimated Travel Time: ${estimatedTravelTime}<br>
 //     `;
 // });
+var x, i, j, l, ll, selElmnt, a, b, c;
+/* Look for any elements with the class "custom-select": */
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  ll = selElmnt.length;
+  /* For each element, create a new DIV that will act as the selected item: */
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /* For each element, create a new DIV that will contain the option list: */
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < ll; j++) {
+    /* For each option in the original select element,
+    create a new DIV that will act as an option item: */
+    c = document.createElement("DIV");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        /* When an item is clicked, update the original select box,
+        and the selected item: */
+        var y, i, k, s, h, sl, yl;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        sl = s.length;
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            yl = y.length;
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+    /* When the select box is clicked, close any other select boxes,
+    and open/close the current select box: */
+    e.stopPropagation();
+    closeAllSelect(this);
+    this.nextSibling.classList.toggle("select-hide");
+    this.classList.toggle("select-arrow-active");
+  });
+}
 
+function closeAllSelect(elmnt) {
+  /* A function that will close all select boxes in the document,
+  except the current select box: */
+  var x, y, i, xl, yl, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  xl = x.length;
+  yl = y.length;
+  for (i = 0; i < yl; i++) {
+    if (elmnt == y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove("select-arrow-active");
+    }
+  }
+  for (i = 0; i < xl; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+    }
+  }
+}
+
+/* If the user clicks anywhere outside the select box,
+then close all select boxes: */
+document.addEventListener("click", closeAllSelect);
