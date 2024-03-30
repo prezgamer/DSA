@@ -27,6 +27,9 @@ class RequestHandler(BaseHTTPRequestHandler):
         
         if (query.__eq__('')):
             results = ParseAirports()
+            self._set_headers()
+            self.wfile.write(json.dumps(results).encode())
+            return
         else:
             try:
                 results = main(params['param1'][0], params['param2'][0], self.airportsBST, self.adjListGraph)
@@ -36,11 +39,10 @@ class RequestHandler(BaseHTTPRequestHandler):
             except:
                 print("Invalid airport names given")
                 results = None
-
-        self._set_headers()
-        self.wfile.write(json.dumps(results).encode())
-        return
-
+            self._set_headers()
+            self.wfile.write(bytes(json.dumps(results).encode()))
+            return
+        
 
 def run():
     # set up http server
