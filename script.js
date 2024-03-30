@@ -248,48 +248,6 @@ async function runPy() {
     }
 };
 
-// async function convertCurrency(amount, currency) {
-//     // Perform currency conversion using an API or any other method
-//     // You can use a currency conversion API or implement your own logic here
-    
-//     const conversionRates = {
-//         'SGD': 1,  // 1 SGD = 1 SGD
-//         'USD': 0.75, // Example conversion rate for USD
-//         'EUR': 0.67  // Example conversion rate for EUR
-//         // Add more conversion rates for other currencies as needed
-//     };
-
-//     // Calculate the converted amount
-//     const convertedAmount = amount * conversionRates[currency];
-//     return convertedAmount.toFixed(2); // Round to two decimal places
-// }
-
-
-// async function convertCurrency(amount, currency) {
-//     const apiKey = 'fca_live_U9zUYU7KcpW3PTTLaJEIHd8wljcrm7cwXllGwe1i'; // Replace 'YOUR_API_KEY' with your actual API key
-//     const apiUrl = `https://api.freecurrencyapi.com/v1/latest?apikey=${apiKey}`;
-
-//     try {
-//         const response = await fetch(apiUrl);
-//         const data = await response.json();
-
-//         if (data.status === 'success') {
-//             const conversionRates = data.data.currencies;
-//             const rate = conversionRates[currency];
-//             if (rate) {
-//                 const convertedAmount = amount * rate;
-//                 return convertedAmount.toFixed(2); // Round to two decimal places
-//             } else {
-//                 throw new Error(`Conversion rate for ${currency} not found`);
-//             }
-//         } else {
-//             throw new Error('Failed to fetch conversion rates');
-//         }
-//     } catch (error) {
-//         console.error('Currency conversion error:', error);
-//         throw new Error('Currency conversion failed');
-//     }
-// }
 
 async function convertCurrency(amount, currency) {
     const apiUrl = 'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_U9zUYU7KcpW3PTTLaJEIHd8wljcrm7cwXllGwe1i&currencies=EUR%2CUSD%2CJPY%2CBGN%2CCZK%2CDKK%2CGBP%2CHUF%2CPLN%2CRON%2CSEK%2CCHF%2CISK%2CNOK%2CHRK%2CRUB%2CTRY%2CAUD%2CBRL%2CCAD%2CCNY%2CHKD%2CIDR%2CILS%2CINR%2CKRW%2CMXN%2CMYR%2CNZD%2CPHP%2CTHB%2CZAR&base_currency=SGD';
