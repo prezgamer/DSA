@@ -214,8 +214,12 @@ async function runPy() {
 
             displayElement.innerHTML = ` 
                 <h3><u><strong>Flight Details:</strong><br></u></h3>
-                <h4><strong>Shortest Path:</strong> ${pathDisplay}<br></h4>
-                
+                <table class="flightdetails">
+                    <tr>
+                        <td><strong>Shortest Path: ${pathDisplay} </strong></td>
+                        </tr>
+                </table>
+
                 <table>
                     <tr>
                         <th><strong>From</strong></th>
