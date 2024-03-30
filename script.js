@@ -6,6 +6,22 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 
+// JavaScript
+//Assuming you have an array of airport names
+const airportNames = ["Los Angeles International Airport", "John F. Kennedy International Airport", /* more airport names... */];
+
+const datalist = document.getElementById('airports');
+
+airportNames.forEach(airport => {
+    const option = document.createElement('option');
+    option.value = airport;
+    datalist.appendChild(option);
+});
+
+
+
+
+
 function clear() {
     document.getElementById('fromAirport').value = '';
     document.getElementById('toAirport').value = '';
@@ -156,65 +172,22 @@ async function runPy() {
             pathDisplay = 'Unknown'; // or set a default value 
             } 
 
-            // Calculate estimated flight time 
+            // calc estimated flight time 
             const avgPlaneSpeed = 925; // km/h 
             const estFlightTime = totalDistance / avgPlaneSpeed; 
             const hours = Math.floor(estFlightTime); 
             const minutes = Math.round((estFlightTime - hours) * 60); 
             const estimatedTravelTime = `${hours} hours ${minutes} minutes`;
  
-            // Display route details
-            const displayContainer = document.getElementById('routeDisplay');
-            displayContainer.innerHTML = ''; // Clear previous content
-
-            // Create table and its header
-            const table = document.createElement('table');
-            table.className = 'table'; // Add class if you have specific styles for tables
-
-            const thead = document.createElement('thead');
-            const headerRow = document.createElement('tr');
-
-            const headers = ["Departure Airport", "Destination Airport", "Total Distance", "Estimated Travel Time", "Price"];
-            headers.forEach(headerText => {
-                const header = document.createElement('th');
-                header.textContent = headerText;
-                headerRow.appendChild(header);
-            });
-
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
-
-            // Create table body where the dynamic rows will be added
-            const tbody = document.createElement('tbody');
-            table.appendChild(tbody);
-
-            // Dynamically add rows to the table body based on data
-            shortestPathInfo.forEach((airport, index) => {
-                if (index < shortestPathInfo.length - 1) {
-                    const row = tbody.insertRow();
-                    
-                    let cell = row.insertCell();
-                    cell.textContent = shortestPathInfo[index]; // From airport
-                    
-                    cell = row.insertCell();
-                    cell.textContent = shortestPathInfo[index + 1]; // To airport
-                    
-                    cell = row.insertCell();
-                    cell.textContent = `${Math.round(totalDistance / (shortestPathInfo.length - 1))} km`; // Distance
-                    
-                    cell = row.insertCell();
-                    const legTime = estFlightTime / (shortestPathInfo.length - 1);
-                    const legHours = Math.floor(legTime);
-                    const legMinutes = Math.round((legTime - legHours) * 60);
-                    cell.textContent = `${legHours} hours ${legMinutes} minutes`; // Estimated Travel Time
-
-                    cell = row.insertCell();
-                    cell.textContent = `$${Math.round(totalCost / (shortestPathInfo.length - 1))}`; // Price
-                }
-            });
-
-            // Append the fully constructed table to display container
-            displayContainer.appendChild(table);
+            // Display route details 
+            const displayElement = document.getElementById('routeDisplay'); 
+            displayElement.innerHTML = ` 
+                <u><strong>Flight Details:</strong><br></u>
+                Shortest Path: ${pathDisplay}<br> 
+                Total Distance: ${totalDistance}km<br> 
+                Total Cost: $${totalCost}<br>
+                Estimated Travel Time: ${estimatedTravelTime}<br> 
+            `;
 
             // auto scrolls down to bring route details into view
             displayElement.scrollIntoView();
