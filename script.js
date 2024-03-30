@@ -156,9 +156,22 @@ async function runPy() {
             displayElement.innerHTML = ` 
                 <h3><u><strong>Flight Details:</strong><br></u></h3>
                 <strong>Shortest Path:</strong> ${pathDisplay}<br> 
-                <strong>Total Distance:</strong> ${totalDistance}km<br> 
-                <strong>Total Cost:</strong> $${totalCost}<br>
-                <strong>Estimated Travel Time:</strong> ${estimatedTravelTime}<br> 
+
+                <table id="customers">
+                    <tr>
+                        <th><strong>Total Distance</strong></th>
+                        <th><strong>Total Cost</strong></th>
+                        <th><strong>Estimated Travel Time:</strong></th>
+                    </tr>
+                    <tr>
+                        <td>${totalDistance}km</td>
+                        <td>$${totalCost}</td>
+                        <td>${estimatedTravelTime}</td>
+                    </tr>
+                    <tr>
+                </table>
+
+
             `;
 
             // auto scrolls down to bring route details into view
