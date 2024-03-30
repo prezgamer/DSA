@@ -169,20 +169,6 @@ header h1 {
     margin-top: 20px;
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table th, .table td {
-    text-align: left;
-    padding: 0.5rem;
-    border-bottom: 1px solid #ccc;
-}
-
-.table th {
-    background-color: #f8f8f8;
-}
 
 /* Responsive design adjustments as needed */
 @media (max-width: 768px) {
@@ -197,10 +183,31 @@ header h1 {
     }
 }
 table, th, td {
-    border: 1px solid;
+    border: 1px solid #282a36;
     border-collapse: collapse;
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   
 table {
     width: 100%;
+    font-size: 16px;
+    line-height: 1.4;
+    text-transform: uppercase;
+
   }
+
+  th{
+    background-color: #282a36;
+    color: #fff;
+  }
+
+  td {
+    font-size: 16px;
+    color: #282a36;
+    text-transform: uppercase;
+    background-color: #fff;
+  }
+  

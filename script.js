@@ -144,6 +144,7 @@ async function runPy() {
             pathDisplay = 'Unknown'; // or set a default value 
             } 
 
+
             // calc estimated flight time 
             const avgPlaneSpeed = 925; // km/h 
             const estFlightTime = totalDistance / avgPlaneSpeed; 
@@ -156,14 +157,18 @@ async function runPy() {
             displayElement.innerHTML = ` 
                 <h3><u><strong>Flight Details:</strong><br></u></h3>
                 <strong>Shortest Path:</strong> ${pathDisplay}<br> 
-
-                <table id="customers">
+                
+                <table>
                     <tr>
+                        <th><strong>From</strong></th>
+                        <th><strong>To</strong></th>
                         <th><strong>Total Distance</strong></th>
                         <th><strong>Total Cost</strong></th>
                         <th><strong>Estimated Travel Time:</strong></th>
                     </tr>
                     <tr>
+                        <td>${fromAirport}</td>
+                        <td>${toAirport}</td>
                         <td>${totalDistance}km</td>
                         <td>$${totalCost}</td>
                         <td>${estimatedTravelTime}</td>
