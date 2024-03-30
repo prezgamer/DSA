@@ -222,7 +222,7 @@ async function runPy() {
                         <th><strong>To</strong></th>
                         <th><strong>Total Distance</strong></th>
                         <th><strong>Total Cost</strong></th>
-                        <th><strong>Estimated Travel Time:</strong></th>
+                        <th><strong>Estimated Travel Time</strong></th>
                     </tr>
                     <tr>
                         <td>${fromAirport}</td>
