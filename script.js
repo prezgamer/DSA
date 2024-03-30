@@ -154,11 +154,11 @@ async function runPy() {
             // Display route details 
             const displayElement = document.getElementById('routeDisplay'); 
             displayElement.innerHTML = ` 
-                <u><strong>Flight Details:</strong><br></u>
-                Shortest Path: ${pathDisplay}<br> 
-                Total Distance: ${totalDistance}km<br> 
-                Total Cost: $${totalCost}<br>
-                Estimated Travel Time: ${estimatedTravelTime}<br> 
+                <h3><u><strong>Flight Details:</strong><br></u></h3>
+                <strong>Shortest Path:</strong> ${pathDisplay}<br> 
+                <strong>Total Distance:</strong> ${totalDistance}km<br> 
+                <strong>Total Cost:</strong> $${totalCost}<br>
+                <strong>Estimated Travel Time:</strong> ${estimatedTravelTime}<br> 
             `;
 
             // auto scrolls down to bring route details into view
