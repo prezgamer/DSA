@@ -1,7 +1,7 @@
 from DataParser import ParseAirports
 from Algorithms import A_star
 from FlightRoute import FlightRoute
-
+from bst import bst
 
 def main(fromAirport: str,toAirport: str, airportsBST, adjListGraph):
     
@@ -82,4 +82,14 @@ def validateRoute(source, dest, routesList) -> FlightRoute | None:
             return route
         
     return None
-                
+
+def getEveryAirport():
+    airportsDict = ParseAirports()
+    everyAirportDict = {}
+
+    for airport in airportsDict:
+        print (airport['airportName'])
+
+
+getEveryAirport()
+

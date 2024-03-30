@@ -103,4 +103,8 @@ def create_airport_bst():
     bstOfAirports = bst()
     bstOfAirports.createBalancedTree(bstReadyDict)
     
+    print(bstReadyDict[row[4]])
     return bstOfAirports
+
+
+create_airport_bst()
