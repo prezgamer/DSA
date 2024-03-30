@@ -223,7 +223,7 @@ td {
   .custom-select-wrapper select {
     display: none;
     }
-    
+
   .custom-select {
     position: relative;
     display: inline-block;
@@ -260,13 +260,13 @@ td {
       }
       .custom-select.opened .custom-select-trigger:after {
         margin-top: 3px;
-
+ 
         transform: rotate(-135deg) translateY(-50%);
       }
   .custom-options {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: 210px repeat(3, 2fr);
     top: 100%; right: 0;
     min-width: 100%;
     margin: 15px 0;
@@ -293,7 +293,7 @@ td {
       
       position: absolute;
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns:210px repeat(3, 2fr);
       content: '';
       bottom: 100%; right: 25px;
       width: 7px; height: 7px;
@@ -308,11 +308,10 @@ td {
       background: #f9f9f9;
     }
     .custom-option {
-     
       position: relative;
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      padding: 10px 22px;
+      grid-template-columns: 210px repeat(3, 2fr);
+      padding: 10px 15px;
       border-bottom: 1px solid #b5b5b5;
       font-size: 14px;
       font-weight: 300;
@@ -322,6 +321,7 @@ td {
     }
     .custom-option:first-of-type {
       border-radius: 4px 4px 0 0;
+
     }
     .custom-option:last-of-type {
       border-bottom: 0;
