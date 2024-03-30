@@ -228,7 +228,7 @@ async function runPy() {
                         <td>${fromAirport}</td>
                         <td>${toAirport}</td>
                         <td>${totalDistance}km</td>
-                        <td>$${convertedCost}</td>
+                        <td>$${convertedCost} in ${selectedCurrency}</td>
                         <td>${estimatedTravelTime}</td>
                     </tr>
                     <tr>
