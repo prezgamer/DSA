@@ -43,6 +43,7 @@ document.getElementById('clearButton').addEventListener('click', function(event)
     clear();
 });
 
+// explore flights button's onclick function
 async function runPy() {
     const fromAirport = document.getElementById('fromAirport').value;
     const toAirport = document.getElementById('toAirport').value;
@@ -75,14 +76,10 @@ async function runPy() {
             }).addTo(map);
             
             for (let i = 0; i < pathNodeCoordinates.length-1; i++) {
-
-                
                 fromLongitude = pathNodeCoordinates[i][0]
                 fromLatitude = pathNodeCoordinates[i][1]
                 toLongitude = pathNodeCoordinates[i+1][0]
                 toLatitude = pathNodeCoordinates[i+1][1]
-
-                
 
                 // Add markers for the airports
                 if (pathNodeCoordinates.length < 3) {
@@ -118,7 +115,6 @@ async function runPy() {
                         .openPopup();
                 }
 
-
                  // Calculate angle between two points
                 const angle = Math.atan2(toLatitude - fromLatitude, toLongitude - fromLongitude) * (180 / Math.PI);
 
@@ -131,22 +127,19 @@ async function runPy() {
                 });
 
                 // Draw the route
-    const routeCoordinates = [
-        [fromLatitude, fromLongitude],
-        [toLatitude, toLongitude]
-    ];
-    const routePath = L.polyline(routeCoordinates, {color: 'blue'}).addTo(map);
-    map.fitBounds(routePath.getBounds());
+                const routeCoordinates = [
+                    [fromLatitude, fromLongitude],
+                    [toLatitude, toLongitude]
+                ];
+                const routePath = L.polyline(routeCoordinates, {color: 'blue'}).addTo(map);
+                map.fitBounds(routePath.getBounds());
 
-    // Calculate midpoint coordinates
-    const midLatitude = (fromLatitude + toLatitude) / 2;
-    const midLongitude = (fromLongitude + toLongitude) / 2;
+                // Calculate midpoint coordinates
+                const midLatitude = (fromLatitude + toLatitude) / 2;
+                const midLongitude = (fromLongitude + toLongitude) / 2;
 
-    // Add a flight icon marker at the midpoint coordinates of the route
-    L.marker([midLatitude, midLongitude], { icon: flightIcon }).addTo(map);
-
-
-
+                // Add a flight icon marker at the midpoint coordinates of the route
+                L.marker([midLatitude, midLongitude], { icon: flightIcon }).addTo(map);
                 // // Draw the route
                 // const routeCoordinates = [
                 //     [fromLatitude, fromLongitude],
@@ -155,9 +148,6 @@ async function runPy() {
                 // const routePath = L.polyline(routeCoordinates, {color: 'blue'}).addTo(map);
                 // map.fitBounds(routePath.getBounds());
             }
-
-            
-            
 
             let pathDisplay; 
             // If shortestPathInfo is an array of airport names 
@@ -195,9 +185,28 @@ async function runPy() {
     }
     catch (error) {
         console.error('There was an error fetching the data:', error);
-        window.alert("Network error when trying to fetch data. Server may be down.")
+        window.alert("Network error when trying to fetch data. Server may be down.");
     }
 };
+
+async function runPy2() {
+    let url = new URL('http://127.0.0.1:8000')
+    // let params = {param1: fromAirport, param2: toAirport}
+    // Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+
+    try {
+        response = await fetch(url);
+        const airports = await response.json();
+
+        for (let i = 0; i < airports.length; i++) {
+            console.log(airports[i]);
+        }
+    }
+    catch (error) {
+        console.error('There was an error fetching the data:', error);
+        window.alert("Network error when trying to fetch data. Server may be down.")
+    }
+}
 
 // document.getElementById('searchForm').addEventListener('submit', function(event) {
 //     event.preventDefault(); // Prevents form from submitting in the traditional way

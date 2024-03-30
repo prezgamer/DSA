@@ -1,7 +1,7 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
-from DataParser import ParseToAdjList, create_airport_bst
+from DataParser import ParseAirports, ParseToAdjList, create_airport_bst
 from main import main
 
 
@@ -25,17 +25,20 @@ class RequestHandler(BaseHTTPRequestHandler):
         query = urlparse(self.path).query
         params = parse_qs(query)
         
-        try:
-            results = main(params['param1'][0], params['param2'][0], self.airportsBST, self.adjListGraph)
-        except KeyError:
-            print("No route exists for given airports")
-            results = None
-        except:
-            print("Invalid airport names given")
-            results = None
+        if (query.__eq__('')):
+            results = ParseAirports()
+        else:
+            try:
+                results = main(params['param1'][0], params['param2'][0], self.airportsBST, self.adjListGraph)
+            except KeyError:
+                print("No route exists for given airports")
+                results = None
+            except:
+                print("Invalid airport names given")
+                results = None
 
         self._set_headers()
-        self.wfile.write(bytes(json.dumps(results), "utf8"))
+        self.wfile.write(json.dumps(results).encode())
         return
 
 
