@@ -61,32 +61,6 @@ def ParseAirports() -> dict:
     return airports_dict
 
 
-# converts routes dictionary into a list of FlightRoute objects
-# returns list of FlightRoute objects
-def RoutesDictToList(routesDict) -> list[FlightRoute]:
-    routesList = []
-    
-    # for every route object, parse into pairs of source and destination airports
-    for routes in routesDict:
-        route = FlightRoute(routes['airline'],routes['sourceAirport'], routes['destAirport'], routes['distance'])
-        routesList.append(route)
-        
-    return routesList
-
-
-# converts airports dictionary into a list of Airport objects
-# returns list of Airport objects
-def AirportsDictToList(airportsDict) -> list[Airport]:
-    airportsList = []
-    
-    # for every airport object, parse into list of airport codes and sort alphabetically
-    for airports in airportsDict:
-        airport = Airport(airports['airportID'], airports['airportName'], airports['city'], airports['country'], airports['IATA'], airports['ICAO'], airports['latitude'], airports['longitude'])
-        airportsList.append(airport)
-    
-    return airportsList
-
-
 # converts airports csv data into a binary search tree of nodes with airport IATA code as key and corresponding airport object as value
 def create_airport_bst():
     # Open the CSV file and read the data
@@ -103,8 +77,4 @@ def create_airport_bst():
     bstOfAirports = bst()
     bstOfAirports.createBalancedTree(bstReadyDict)
     
-    print(bstReadyDict[row[4]])
     return bstOfAirports
-
-
-create_airport_bst()
